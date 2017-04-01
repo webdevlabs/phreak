@@ -1,4 +1,4 @@
-# Lamez
+# Phreak
 ### the ultimate development tool for lamez :)
 
 simple php framework based on:
