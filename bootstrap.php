@@ -11,6 +11,8 @@
  * 
  */
 
+error_reporting(1);
+
 include __DIR__ . '/config/system.php';
 include __DIR__ . '/config/cache.php';
 include __DIR__ . '/config/database.php';
@@ -51,9 +53,9 @@ $language=$container->get('System\Language');
 $URIparts = explode("/", $requestURI);
 // check if language is set by url
 if (in_array($URIparts[1], $language->available_languages)) {
-    $language->load($URIparts[1]);
     // rewrite requestURI
     $requestURI=after($URIparts[1],$requestURI);
+    $language->load($URIparts[1]);
 }else {
     $language->load('default');
 }
@@ -71,7 +73,9 @@ require_once ROOT_DIR.'/routes.php';
  */
  $session = $container->get('\System\Session');
  $session->start();
- 
+ $session->set('admin_id',1);
+ $session->set('requestURI',$requestURI);
+
  /**
   * Load System \System\Modules
   */

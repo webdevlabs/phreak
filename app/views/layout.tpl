@@ -38,11 +38,13 @@
           <div class="masthead clearfix">
             <div class="inner">
               <h3 class="masthead-brand">{$page_title}</h3>
-              <nav>
+              <nav>{$requestURI}
                 <ul class="nav masthead-nav">
-                  <li class="active"><a href="#">Home</a></li>
-                  <li><a href="#features">Features</a></li>
-                  <li><a href="#contact">Contact</a></li>
+                  <li {if $requestURI eq '/'}class="active"{/if}><a href="{$BASE_URL}">Home</a></li>
+                  <li {if $requestURI eq '/admin'}class="active"{/if}><a href="{$BASE_URL}/admin">Admin</a></li>
+                  <li {if $requestURI eq '/admin/dashboard'}class="active"{/if}><a href="{$BASE_URL}/admin/dashboard">Dashboard</a></li>
+                  <li {if $requestURI eq '/test'}class="active"{/if}><a href="{$BASE_URL}/test">test</a></li>
+                  <li><a href="#">({$language})</a></li>
                 </ul>
               </nav>
             </div>
@@ -56,7 +58,7 @@
               <div class="features">
               <dl class="dl-horizontal">
                 <dt><a href="https://github.com/mrjgreen/phroute">Phroute</a></dt>
-                <dd>URL Routing</dd>
+                <dd>URL Router</dd>
               </dl>
               <dl class="dl-horizontal">
                 <dt><a href="https://github.com/PHP-DI/PHP-DI">PHP-DI</a></dt>
@@ -64,17 +66,21 @@
               </dl>
               <dl class="dl-horizontal">
                 <dt><a href="https://github.com/smarty-php/smarty">Smarty</a></dt>
-                <dd>template engine</dd>
+                <dd>Template Engine</dd>
               </dl>
               <dl class="dl-horizontal">
                 <dt><a href="https://github.com/tedious/www.stashphp.com">Stash</a></dt>
-                <dd>caching library</dd>
+                <dd>Caching Library</dd>
               </dl>
               </div>
             </p>
             <p class="lead">
               <a href="https://github.com/webdevlabs/phreak" class="btn btn-lg btn-default">Learn more</a>
             </p>
+          </div>
+
+          <div class="inner">
+          <h3>{$page_content}</h3>
           </div>
 
           <div class="mastfoot">

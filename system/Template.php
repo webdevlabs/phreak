@@ -11,18 +11,20 @@
  */
 
 namespace System;
+use DI\Container;
 
 class Template extends \Smarty {
 	private $req;
 	private $conf;
 
-	public function __construct (Config $conf) {
+	public function __construct (Config $conf, Language $language) {
 		parent::__construct();
 		$this->conf = $conf;
-
 		$this->setCompileCheck(true); // set true to require smarty check if the template file is modified
 		$this->force_compile = false; // set true only for debugging purposes
-
+		$requestURI = $_SESSION['requestURI'];
+		$this->assign('requestURI',$requestURI);
+		$this->assign('language',$language->current);
 		$this->setTemplateDir(ROOT_DIR.'/App/views/')
 		->setCompileDir(ROOT_DIR."/storage/cache/smarty")
 		->setCacheDir(ROOT_DIR."/storage/cache/smarty")
@@ -35,7 +37,7 @@ class Template extends \Smarty {
 		$this->registerPlugin('modifier', "roundmoney", array($this, 'roundmoney'));
 //		$this->registerPlugin('modifier', "ago", 'ago');
 		// if not logged in as admin
-		if (!$_SESSION['admin_id'] > "0") {
+		if (!$session->admin_id > "0") {
 			if ($this->conf->encode_output_emails == '1') {
 				$this->registerFilter("output", array($this, 'protect_email')); // encode email addresses
 			}

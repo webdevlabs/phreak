@@ -12,7 +12,12 @@ class HomeController {
    public function showIndex()
     {
         $msg='Welcome';
-        $this->template->assign('page_title',$msg);
+        $title="webdevlabs";
+
+        $this->template->assign([
+            'page_title'=>$title,
+            'page_content'=>$msg
+        ]);
         return $this->template->display('layout.tpl');
     }    
 

@@ -19,7 +19,8 @@ class Main {
    public function showIndex()
     {
         $msg = $this->model->getMsg();
-        $this->template->assign('page_title',$msg);
+        $this->template->assign('page_title','Test title');
+        $this->template->assign('page_content',$msg);
         return $this->template->display('layout.tpl');
     }    
 
