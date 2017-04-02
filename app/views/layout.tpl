@@ -37,7 +37,7 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">webdevlabs</h3>
+              <h3 class="masthead-brand">{$page_title}</h3>
               <nav>
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="#">Home</a></li>

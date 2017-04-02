@@ -9,14 +9,16 @@ class Dashboard {
         $this->template = $template;
     }
 
-   public function showIndex() {
+   public function anyIndex() {
         $msg='Welcome Admin!';
-        return $this->template->display($msg);
+        $this->template->assign('page_title',$msg);
+        return $this->template->display('layout.tpl');
     }    
 
-   public function anyIndex() {
+   public function getDashboard() {
         $msg='Welcome Admin! This is your dashboard';
-        return $this->template->display($msg);
+        $this->template->assign('page_title',$msg);
+        return $this->template->display('layout.tpl');
     }    
 
 }

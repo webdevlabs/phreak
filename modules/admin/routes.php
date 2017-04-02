@@ -8,8 +8,7 @@ $router->group([
         'before'=>'authadmin'
     ], 
     function ($router) {
-        $router->get('/', ['Modules\Admin\Controllers\Dashboard','showIndex'])
-               ->controller('/', 'Modules\Admin\Controllers\Dashboard');
+        $router->controller('/', 'Modules\Admin\Controllers\Dashboard');
 });
 
 /*
