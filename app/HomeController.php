@@ -12,7 +12,7 @@ class HomeController {
    public function showIndex()
     {
         $msg='Welcome';
-        return $this->template->display($msg);
+        return $this->template->display('layout.tpl');
     }    
 
 }

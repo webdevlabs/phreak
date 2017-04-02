@@ -30,6 +30,14 @@ $cache = new Stash\Pool($cachedriver);
 $container = DI\ContainerBuilder::buildDevContainer();
 
 /**
+ * Load HTTP Request/Response libs
+ */
+use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequestFactory;
+$request = new Request();
+$response = ServerRequestFactory::fromGlobals();
+
+/**
  * Load System Language 
  */
 // Create the requestURI value and exclude subdir

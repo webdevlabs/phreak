@@ -10,7 +10,7 @@
  * @link https://www.webdevlabs.com
  * 
  */
-
+error_reporting(0);
 require_once __DIR__.'/../bootstrap.php';
 
 // Cache the routes data

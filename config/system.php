@@ -3,7 +3,7 @@ define('SITE_KEY','put_your_encryption_key_here');
 
 /* BASE SETTINGS */
 //define('BASE_URL',"http://".$_SERVER['HTTP_HOST']."/cms");
-define('BASE_PATH',"/phreak"); // leave empty if not in subdir
+define('BASE_PATH',""); // leave empty if not in subdir
 define('BASE_URL',"http://localhost:8080".BASE_PATH);
 define('ROOT_DIR', dirname(__DIR__));
 
