@@ -1,0 +1,5 @@
+# Block direct HTTP requests to these file types
+<Files ~ "\.(tpl|php|cgi|pl|phps|jar)$">
+  Order deny,allow
+  Deny from all
+</Files>
