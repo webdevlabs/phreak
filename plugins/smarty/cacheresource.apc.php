@@ -1,4 +1,5 @@
 <?php
+
 /**
  * APC CacheResource
  * CacheResource Implementation based on the KeyValueStore API to use
@@ -17,6 +18,7 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
             throw new Exception('APC Template Caching Error: APC is not installed');
         }
     }
+
     /**
      * Read values for a set of keys from cache
      *
@@ -32,8 +34,10 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
         foreach ($res as $k => $v) {
             $_res[ $k ] = $v;
         }
+
         return $_res;
     }
+
     /**
      * Save values for a set of keys to cache
      *
@@ -47,8 +51,10 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
         foreach ($keys as $k => $v) {
             apc_store($k, $v, $expire);
         }
+
         return true;
     }
+
     /**
      * Remove values from cache
      *
@@ -61,8 +67,10 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
         foreach ($keys as $k) {
             apc_delete($k);
         }
+
         return true;
     }
+
     /**
      * Remove *all* values from cache
      *

@@ -11,7 +11,7 @@
  * 
  */
 
-error_reporting(1);
+error_reporting(0);
 
 include __DIR__ . '/config/system.php';
 include __DIR__ . '/config/cache.php';
