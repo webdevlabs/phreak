@@ -1,4 +1,14 @@
+phreak.pack
+composer.lock
+vendor/*
 config/*
 storage/*
-vendor/*
-phreak.pack
+!*/.gitkeep
+!*/.htaccess
+!storage/cache/.htaccess
+!storage/cache/.gitkeep
+!storage/cache/smarty/.gitkeep
+!storage/cache/stash/.gitkeep
+!storage/languages/.gitkeep
+!storage/uploads/.gitkeep
+!storage/logs/.gitkeep
