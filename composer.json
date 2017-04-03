@@ -1,6 +1,6 @@
 {
     "name": "webdevlabs/phreak",
-    "type": "php-framework",
+    "type": "project",
     "description": "Phreak! the ultimate development tool for lamez :)",
     "version": "0.0.4",
     "keywords": ["php", "hmvc", "phreak", "framework"],
@@ -13,8 +13,7 @@
         "phroute/phroute": "^2.1",
         "zendframework/zend-diactoros": "^1.3",
         "oscarotero/psr7-middlewares": "^3.20",
-        "relay/relay": "~1.0",
-        "mnsami/composer-custom-directory-installer": "1.1.*"
+        "relay/relay": "~1.0"
     },
     "authors": [{
         "name": "Simeon Lyubenov",
@@ -28,10 +27,5 @@
     "repositories": [{
         "type": "git",
         "url": "https://github.com/webdevlabs/phreak"
-    }],
-    "extra": {
-        "installer-paths": {
-            "./": ["webdevlabs/phreak"]
-        }
-    }
+    }]
 }

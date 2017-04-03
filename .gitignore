@@ -1,4 +1,3 @@
-composer.lock
 vendor/*
 storage/cache/smarty/*
 storage/cache/stash/*
