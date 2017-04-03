@@ -7,11 +7,7 @@ class Language {
 
     public function __construct (Config $conf) {
         $this->conf = $conf;
+        $this->current = 'en';
     }
     
-    public function load ($lang='default') {
-        if ($lang=='default') { $lang='en'; }
-        $this->current = $lang;
-    }
-
 }

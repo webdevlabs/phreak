@@ -47,7 +47,6 @@ $response = $response
 $request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
 
 $requestURI=$request->getUri()->getPath();
-//echo '<br/>'.$request->getUri()->getPath().'<br/>';
 
 /**
  * Load Router (Phroute)
@@ -93,13 +92,13 @@ $dispatcher = new Phroute\Phroute\Dispatcher($routesData, $resolver);
  */
 //Create a relay dispatcher and add some middlewares:
 use Psr7Middlewares\Middleware;
-use Psr7Middlewares\Middleware\LanguageNegotiator;
 $relay = new Relay\RelayBuilder();
+
 $relaydispatcher = $relay->newInstance([
     Middleware::responseTime(),
-    Middleware::LanguageDetect($language->available_languages),
+    new Plugins\Middlewares\LanguageDetect($language),
     new Plugins\Middlewares\Phroute($dispatcher)    
 ]);
 $response = $relaydispatcher($request, $response);
 $emitter =  new \Zend\Diactoros\Response\SapiEmitter;
-return $emitter->emit($response);
+$emitter->emit($response);

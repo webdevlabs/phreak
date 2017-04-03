@@ -44,16 +44,14 @@ class Phroute
             $bufferedBody = ob_get_clean();
             $response->getBody()->write($bufferedBody);
             $response = $response->withStatus(200);
-            return $next($request, $response);
         }
         catch (\Phroute\Phroute\Exception\HttpRouteNotFoundException $e) {
                 $reponse = new \Zend\Diactoros\Response\HtmlResponse($e->getMessage(), 404);
-                return $emitter->emit($reponse);
         }
         catch (\Phroute\Phroute\Exception\BadRouteException $e) {
             $allowedMethods = $routeInfo[1];
                 $reponse = new \Zend\Diactoros\Response\HtmlResponse($e->getMessage(), 405);
-                return $emitter->emit($reponse);
         }
+        return $next($request, $response);
     }
 }
