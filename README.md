@@ -5,3 +5,4 @@
 - [Smarty](https://github.com/smarty-php/smarty) (template engine)
 - [Stash](https://github.com/tedious/www.stashphp.com) (caching library)
 - [Zend Diactoros](https://github.com/zendframework/zend-diactoros) (request/response handlers)
+- [RelayPHP](http://relayphp.com/) (middleware dispatcher)

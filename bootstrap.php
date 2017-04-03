@@ -62,7 +62,7 @@ require_once ROOT_DIR.'/routes.php';
  $session = $container->get('\System\Session');
  $session->start();
  $session->set('admin_id',1);
- $session->set('requestURI',$requestURI);
+// $session->set('requestURI',$requestURI);
 
  /**
   * Load System Modules

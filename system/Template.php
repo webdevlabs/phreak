@@ -20,11 +20,13 @@ class Template extends \Smarty {
 	public function __construct (Config $conf, Language $language) {
 		parent::__construct();
 		$this->conf = $conf;
+
 		$this->setCompileCheck(true); // set true to require smarty check if the template file is modified
 		$this->force_compile = false; // set true only for debugging purposes
-		$requestURI = $_SESSION['requestURI'];
-		$this->assign('requestURI',$requestURI);
+
+		$this->assign('requestURI',$_SESSION['requestURI']);
 		$this->assign('language',$language->current);
+		
 		$this->setTemplateDir(ROOT_DIR.'/App/views/')
 		->setCompileDir(ROOT_DIR."/storage/cache/smarty")
 		->setCacheDir(ROOT_DIR."/storage/cache/smarty")

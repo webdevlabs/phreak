@@ -2,7 +2,7 @@
     "name": "webdevlabs/phreak",
     "type": "framework",
     "description": "Phreak! the ultimate development tool for lamez :)",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "keywords": ["php", "hmvc", "phreak", "framework"],
     "homepage": "https://www.webdevlabs.com",
     "license": "MIT",
@@ -13,8 +13,7 @@
         "phroute/phroute": "^2.1",
         "zendframework/zend-diactoros": "^1.3",
         "oscarotero/psr7-middlewares": "^3.20",
-        "relay/relay": "~1.0",
-        "willdurand/negotiation": "^2.2"
+        "relay/relay": "~1.0"
     },
     "authors": [{
         "name": "Simeon Lyubenov",
