@@ -27,5 +27,10 @@
     "repositories": [{
         "type": "git",
         "url": "https://github.com/webdevlabs/phreak"
-    }]
+    }],
+    "extra": {
+        "installer-paths": {
+            "./": ["webdevlabs/phreak"]
+        }
+    }
 }
