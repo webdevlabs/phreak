@@ -33,11 +33,11 @@ class Template extends \Smarty {
 		}		
 		$this->assign('baseurl',$baseurl);
 
-		$this->setTemplateDir(ROOT_DIR.'/App/views/')
+		$this->setTemplateDir(ROOT_DIR.'/app/views/')
 		->setCompileDir(ROOT_DIR."/storage/cache/smarty")
 		->setCacheDir(ROOT_DIR."/storage/cache/smarty")
 		->setConfigDir(ROOT_DIR."/storage/languages")
-		->addPluginsDir(ROOT_DIR."/plubins/smarty");
+		->addPluginsDir(ROOT_DIR."/plugins/smarty");
 
 		// register basic internal functions
 		$this->registerPlugin('function', "show_msg", array($this, 'show_msg'));
