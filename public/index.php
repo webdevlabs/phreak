@@ -12,4 +12,6 @@
  */
 require_once __DIR__.'/../bootstrap.php';
 
-
+// Emit the response
+$emitter =  new \Zend\Diactoros\Response\SapiEmitter;
+$emitter->emit($response);

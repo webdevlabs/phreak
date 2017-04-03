@@ -71,7 +71,7 @@ $modules = $container->get('\System\Modules');
 $modules->loadRoutes($router);
 
 // Cache the routes data
-$item = $cache->getItem('req_'.$requestURI);
+$item = $cache->getItem('routes');
 $routesData = $item->get();
 if ($item->isMiss()) {
 	$item->lock();    
@@ -86,7 +86,6 @@ $resolver = new System\RouterResolver($container);
 // Create Route Dispatcher object
 $dispatcher = new Phroute\Phroute\Dispatcher($routesData, $resolver);
 
-
 /**
  * Load Middlewares
  */
@@ -95,10 +94,10 @@ use Psr7Middlewares\Middleware;
 $relay = new Relay\RelayBuilder();
 
 $relaydispatcher = $relay->newInstance([
+    Middleware::basePath(BASE_PATH),
+    Middleware::trailingSlash(),
     Middleware::responseTime(),
     new Plugins\Middlewares\LanguageDetect($language),
     new Plugins\Middlewares\Phroute($dispatcher)    
 ]);
 $response = $relaydispatcher($request, $response);
-$emitter =  new \Zend\Diactoros\Response\SapiEmitter;
-$emitter->emit($response);

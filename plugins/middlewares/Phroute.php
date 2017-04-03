@@ -33,12 +33,10 @@ class Phroute
      * @return ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next) {
-        // Create the Response Emitter
-        $emitter =  new \Zend\Diactoros\Response\SapiEmitter;
-
         // Application is loaded. Execute Route Dispatcher
         // WITH PSR7 REQUEST/RESPONSE HANDLERS
         try {
+            $_SESSION['requestURI']=$request->getUri()->getPath();
             ob_start();
             $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
             $bufferedBody = ob_get_clean();
