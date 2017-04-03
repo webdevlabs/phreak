@@ -1,6 +1,6 @@
 {
     "name": "webdevlabs/phreak",
-    "type": "project",
+    "type": "php-framework",
     "description": "Phreak! the ultimate development tool for lamez :)",
     "version": "0.0.4",
     "keywords": ["php", "hmvc", "phreak", "framework"],
