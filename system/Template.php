@@ -26,7 +26,13 @@ class Template extends \Smarty {
 
 		$this->assign('requestURI',$_SESSION['requestURI']);
 		$this->assign('language',$language->current);
-		
+		if ($language->default !== $language->current) {
+			$baseurl = BASE_URL.'/'.$language->current;
+		}else {
+			$baseurl = BASE_URL;
+		}		
+		$this->assign('baseurl',$baseurl);
+
 		$this->setTemplateDir(ROOT_DIR.'/App/views/')
 		->setCompileDir(ROOT_DIR."/storage/cache/smarty")
 		->setCacheDir(ROOT_DIR."/storage/cache/smarty")

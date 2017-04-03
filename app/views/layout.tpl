@@ -40,10 +40,10 @@
               <h3 class="masthead-brand">{$page_title}</h3>
               <nav>{$requestURI}
                 <ul class="nav masthead-nav">
-                  <li {if $requestURI eq '/'}class="active"{/if}><a href="{$BASE_URL}">Home</a></li>
-                  <li {if $requestURI eq '/admin'}class="active"{/if}><a href="{$BASE_URL}/admin">Admin</a></li>
-                  <li {if $requestURI eq '/admin/dashboard'}class="active"{/if}><a href="{$BASE_URL}/admin/dashboard">Dashboard</a></li>
-                  <li {if $requestURI eq '/test'}class="active"{/if}><a href="{$BASE_URL}/test">test</a></li>
+                  <li {if $requestURI eq '/'}class="active"{/if}><a href="{$baseurl}">Home</a></li>
+                  <li {if $requestURI eq '/admin'}class="active"{/if}><a href="{$baseurl}/admin">Admin</a></li>
+                  <li {if $requestURI eq '/admin/dashboard'}class="active"{/if}><a href="{$baseurl}/admin/dashboard">Dashboard</a></li>
+                  <li {if $requestURI eq '/test'}class="active"{/if}><a href="{$baseurl}/test">test</a></li>
                   <li><a href="#">({$language})</a></li>
                 </ul>
               </nav>

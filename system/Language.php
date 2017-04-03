@@ -2,12 +2,13 @@
 namespace System;
 
 class Language {
-    public $current;    
-    public $available_languages = array('en', 'it', 'de', 'fr','bg');
+    public $current, $default;    
+    public $available_languages = ['en', 'it', 'de', 'fr','bg'];
 
     public function __construct (Config $conf) {
         $this->conf = $conf;
-        $this->current = 'en';
+        $this->default = 'en';
+        $this->current = $this->default;
     }
     
 }
