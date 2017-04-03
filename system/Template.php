@@ -37,7 +37,7 @@ class Template extends \Smarty {
 		$this->registerPlugin('modifier', "roundmoney", array($this, 'roundmoney'));
 //		$this->registerPlugin('modifier', "ago", 'ago');
 		// if not logged in as admin
-		if (!$session->admin_id > "0") {
+		if (!$_SESSION['admin_id'] > "0") {
 			if ($this->conf->encode_output_emails == '1') {
 				$this->registerFilter("output", array($this, 'protect_email')); // encode email addresses
 			}
@@ -108,7 +108,7 @@ class Template extends \Smarty {
 			parent::clearCache($template);
 		}
 		if (!$cache_id) {
-			$cache_id = md5($_SESSION['language'].'_'.$_SESSION['ref_url']);
+//			$cache_id = md5($_SESSION['language'].'_'.$_SESSION['ref_url']);
 		}
 		parent::display($template, $cache_id, $compile_id, $parent);
 	}

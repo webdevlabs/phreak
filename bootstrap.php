@@ -11,7 +11,7 @@
  * 
  */
 
-error_reporting(0);
+error_reporting(-1);
 
 include __DIR__ . '/config/system.php';
 include __DIR__ . '/config/cache.php';
@@ -32,33 +32,22 @@ $cache = new Stash\Pool($cachedriver);
 $container = DI\ContainerBuilder::buildDevContainer();
 
 /**
- * Load HTTP Request/Response libs
- */
-use Zend\Diactoros\Request;
-use Zend\Diactoros\ServerRequestFactory;
-$request = new Request();
-$response = ServerRequestFactory::fromGlobals();
-
-/**
  * Load System Language 
  */
-// Create the requestURI value and exclude subdir
-$requestURIarray=parse_url($_SERVER['REQUEST_URI']);
-$requestURI=after(BASE_PATH,$requestURIarray['path']);
-$requestMethod=$_SERVER['REQUEST_METHOD'];
-
-// Detect requested language and rewrite requestURI
 $language=$container->get('System\Language');
-// split the URL in parts
-$URIparts = explode("/", $requestURI);
-// check if language is set by url
-if (in_array($URIparts[1], $language->available_languages)) {
-    // rewrite requestURI
-    $requestURI=after($URIparts[1],$requestURI);
-    $language->load($URIparts[1]);
-}else {
-    $language->load('default');
-}
+
+/**
+ * Load HTTP Request/Response libs
+ */
+$response = new Zend\Diactoros\Response();
+$response = $response
+    ->withHeader('Content-Type', 'text/html')
+    ->withAddedHeader('X-Phreak-KEY', SITE_KEY)
+    ->withHeader('Cache-Control', 'private, max-age=3600, must-revalidate');
+$request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
+
+$requestURI=$request->getUri()->getPath();
+//echo '<br/>'.$request->getUri()->getPath().'<br/>';
 
 /**
  * Load Router (Phroute)
@@ -77,8 +66,40 @@ require_once ROOT_DIR.'/routes.php';
  $session->set('requestURI',$requestURI);
 
  /**
-  * Load System \System\Modules
+  * Load System Modules
   */
 $modules = $container->get('\System\Modules');
 $modules->loadRoutes($router);
 
+// Cache the routes data
+$item = $cache->getItem('req_'.$requestURI);
+$routesData = $item->get();
+if ($item->isMiss()) {
+	$item->lock();    
+    $routesData=$router->getData();
+    $item->set($routesData);
+	$cache->save($item);
+}
+
+// Use custom router resolver with dependency injection 
+$resolver = new System\RouterResolver($container);
+
+// Create Route Dispatcher object
+$dispatcher = new Phroute\Phroute\Dispatcher($routesData, $resolver);
+
+
+/**
+ * Load Middlewares
+ */
+//Create a relay dispatcher and add some middlewares:
+use Psr7Middlewares\Middleware;
+use Psr7Middlewares\Middleware\LanguageNegotiator;
+$relay = new Relay\RelayBuilder();
+$relaydispatcher = $relay->newInstance([
+    Middleware::responseTime(),
+    Middleware::LanguageDetect($language->available_languages),
+    new Plugins\Middlewares\Phroute($dispatcher)    
+]);
+$response = $relaydispatcher($request, $response);
+$emitter =  new \Zend\Diactoros\Response\SapiEmitter;
+return $emitter->emit($response);
