@@ -1,8 +1,8 @@
 {
     "name": "webdevlabs/phreak",
-    "type": "php-framework",
+    "type": "project",
     "description": "Phreak! the ultimate development tool for lamez :)",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "keywords": ["php", "hmvc", "phreak", "framework"],
     "homepage": "https://www.webdevlabs.com",
     "license": "MIT",
@@ -22,10 +22,12 @@
     "support": {
         "irc": "irc://irc.lamez.org/Lamez",
         "issues": "https://github.com/webdevlabs/phreak/issues",
-        "wiki": "https://github.com/webdevlabs/phreak/wiki"
+        "wiki": "https://github.com/webdevlabs/phreak/wiki",
+        "source": "https://github.com/webdevlabs/phreak"
     },
-    "repositories": [{
-        "type": "git",
-        "url": "https://github.com/webdevlabs/phreak"
-    }]
+    "scripts": {
+        "post-install-cmd": [
+            "php installer"
+        ]
+    }
 }

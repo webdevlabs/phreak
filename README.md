@@ -9,6 +9,4 @@
 - [PSR7-Middlewares](https://github.com/oscarotero/psr7-middlewares) (collection of PSR-7 middlewares)
 
 #### Installation instructions
-`git pull https://github.com/webdevlabs/phreak`
-
-`composer install`
+`composer create-project webdevlabs/phreak`

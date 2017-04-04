@@ -100,7 +100,7 @@ $relaydispatcher = $relay->newInstance([
     Middleware::basePath(BASE_PATH),
     Middleware::trailingSlash(),
     Middleware::responseTime(),
-    new Plugins\Middlewares\LanguageDetect($language),
-    new Plugins\Middlewares\Phroute($dispatcher)    
+    new System\Middlewares\LanguageDetect($language),
+    new System\Middlewares\Phroute($dispatcher)    
 ]);
 $response = $relaydispatcher($request, $response);
