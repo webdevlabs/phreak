@@ -4,6 +4,8 @@ namespace System\Middlewares;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Phroute\Phroute\Dispatcher;
+use Phroute\Phroute\Exception\HttpRouteNotFoundException;
+use Phroute\Phroute\Exception\BadRouteException;
 
 class Phroute
 {
@@ -37,18 +39,16 @@ class Phroute
         // WITH PSR7 REQUEST/RESPONSE HANDLERS
         try {
             $_SESSION['requestURI']=$request->getUri()->getPath();
-            ob_start();
-            $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
-            $bufferedBody = ob_get_clean();
-            $response->getBody()->write($bufferedBody);
+            $response = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
             $response = $response->withStatus(200);
         }
-        catch (\Phroute\Phroute\Exception\HttpRouteNotFoundException $e) {
-                $reponse = new \Zend\Diactoros\Response\HtmlResponse($e->getMessage(), 404);
+        catch (HttpRouteNotFoundException $e) {
+                return $response->withStatus(404);
+//                $reponse = new \Zend\Diactoros\Response\HtmlResponse($e->getMessage(), 404);
         }
-        catch (\Phroute\Phroute\Exception\BadRouteException $e) {
-            $allowedMethods = $routeInfo[1];
-                $reponse = new \Zend\Diactoros\Response\HtmlResponse($e->getMessage(), 405);
+        catch (BadRouteException $e) {
+                return $response->withStatus(405);
+//                $reponse = new \Zend\Diactoros\Response\HtmlResponse($e->getMessage(), 405);
         }
         return $next($request, $response);
     }
