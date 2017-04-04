@@ -21,7 +21,7 @@ class Main {
         $msg = $this->model->getMsg();
         $this->template->assign('page_title','Test title');
         $this->template->assign('page_content',$msg);
-        return $this->template->display('layout.tpl');
+        $this->template->display('layout.tpl');
     }    
 
 }
