@@ -73,14 +73,19 @@ require_once ROOT_DIR.'/routes.php';
 $modules = $container->get('\System\Modules');
 $modules->loadRoutes($router);
 
-// Cache the routes data
-$item = $cache->getItem('routes');
-$routesData = $item->get();
-if ($item->isMiss()) {
-	$item->lock();    
+$route_caching=true;
+if ($route_caching) {
+    // Cache the routes data
+    $item = $cache->getItem('routes');
+    $routesData = $item->get();
+    if ($item->isMiss()) {
+        $item->lock();    
+        $routesData=$router->getData();
+        $item->set($routesData);
+        $cache->save($item);
+    }
+}else {
     $routesData=$router->getData();
-    $item->set($routesData);
-	$cache->save($item);
 }
 
 // Use custom router resolver with dependency injection 
