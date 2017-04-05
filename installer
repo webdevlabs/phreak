@@ -18,7 +18,8 @@ echo "Copying sample configs...\n";
 copyFiles([
     "config/system.php.sample"=>"config/system.php",
     "config/cache.php.sample"=>"config/cache.php",
-    "config/modules.php.sample"=>"config/modules.php"            
+    "config/session.php.sample"=>"config/session.php",    
+    "config/modules.php.sample"=>"config/modules.php",
 ]);
 echo "\nPhreak! has been successfuly installed!\n";
 echo "################ Enjoy! ################\n";
