@@ -41,7 +41,7 @@ class Session extends SessionHandler {
 		return session_regenerate_id($deleteold);
 	}
 
-	public function isExpired($ttl = SESSION_EXPIRE) {
+	public function isExpired($ttl = 1800) {
 		$last = isset($_SESSION['_last_activity']) ? $_SESSION['_last_activity'] : false;
 		if ($last !== false && time() - $last > $ttl * 60) {
 			return true;
