@@ -2,12 +2,10 @@
 /**
  * Helper Functions
  *
- * @package bgCMS
- * @author Simeon Lyubenov (ShakE) <office@webdevlabs.com>
+ * @package phreak
+ * @author Simeon Lyubenov <lyubenov@gmail.com>
+ * @link http://www.lamez.org
  * @link https://www.webdevlabs.com
- * @copyright Copyright (c) 2016 Simeon Lyubenov. All rights reserved.
- * @license NON-EXCLUSIVE LICENSE / Non-redistributable code
- * @note Web Development Labs reserves all intellectual property rights, including copyrights and trademark rights.
  */
 
 /**

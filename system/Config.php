@@ -1,11 +1,13 @@
 <?php
 namespace System;
 
-class Config {
+class Config 
+{
    	public $conf;
     private $configfiles;
 
-    public function __construct () {
+    public function __construct () 
+    {
         $this->configfiles = [
             'system'=>ROOT_DIR.'/config/system.php',
             'cache'=>ROOT_DIR.'/config/cache.php',
@@ -19,13 +21,15 @@ class Config {
         $this->conf = $this->build($this->conf);
     }
 
-	public function __get($name) {
+	public function __get($name) 
+    {
 		if (@array_key_exists($name, $this->conf)) {
 			return $this->conf[$name];
 		}
 	}
 
-    public function build ($conf) {
+    public function build ($conf) 
+    {
         foreach ($this->configfiles as $cfgkey => $cfgfile) {
             if (is_readable($cfgfile)) {
                 $conf[$cfgkey]=include($cfgfile);

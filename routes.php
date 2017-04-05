@@ -7,7 +7,6 @@
 $router->get('/', ['App\HomeController','showIndex']);
 
 /*
-$template = $container->get('System\Template');
 $router->get('/gz', function() use ($template) {
     $template->assign([
             'page_title'=>'gz',

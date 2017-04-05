@@ -32,6 +32,7 @@ require_once __DIR__ . '/system/functions.php';
 require_once __DIR__ . '/system/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
+
 /**
  * Load Dependency Injector Container (PHP-DI)
  */
@@ -43,16 +44,16 @@ $container = DI\ContainerBuilder::buildDevContainer();
 $config = $container->get('System\Config');
 
 /**
- * Load System Logger
- */
-$logger = $container->get('System\Logger');
-
-/**
  * Load Cache Library (Stash)
  */
+//$cachedriver = new Stash\Driver\Memcache(['servers'=>[$config->cache['memcached']['host'],$config->cache['memcached']['port']]]);
 $cachedriver = new Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cachedir']]);
 $cache = new Stash\Pool($cachedriver);
 
+/**
+ * Load System Logger
+ */
+$logger = $container->get('System\Logger');
 
 /**
  * Load Database

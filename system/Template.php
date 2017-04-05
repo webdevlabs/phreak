@@ -2,12 +2,10 @@
 /**
  * Template functions
  *
- * @package bgCMS
- * @author Simeon Lyubenov (ShakE) <office@webdevlabs.com>
+ * @package phreak
+ * @author Simeon Lyubenov <lyubenov@gmail.com>
+ * @link http://www.lamez.org
  * @link https://www.webdevlabs.com
- * @copyright Copyright (c) 2016 Simeon Lyubenov. All rights reserved.
- * @license NON-EXCLUSIVE LICENSE / Non-redistributable code
- * @note Web Development Labs reserves all intellectual property rights, including copyrights and trademark rights.
  */
 
 namespace System;
@@ -34,8 +32,8 @@ class Template extends \Smarty {
 		$this->assign('baseurl',$baseurl);
 
 		$this->setTemplateDir(ROOT_DIR.'/app/views/')
-		->setCompileDir(ROOT_DIR."/storage/cache/smarty")
-		->setCacheDir(ROOT_DIR."/storage/cache/smarty")
+		->setCompileDir($this->conf->cache['smarty']['compiledir'])
+		->setCacheDir($this->conf->cache['smarty']['cachedir'])
 		->setConfigDir(ROOT_DIR."/storage/languages")
 		->addPluginsDir(ROOT_DIR."/plugins/smarty");
 
@@ -61,12 +59,12 @@ class Template extends \Smarty {
 				$this->registerFilter("output", array($this, 'combine_css')); // enable combine_css
 			}
 			// Cache settings
-			if ($this->conf->cache_lifetime > 0) {
-				$this->setCacheLifetime($this->conf->cache_lifetime); // 1 hour
+			if ($this->conf->cache['smarty']['lifetime'] > 0) {
+				$this->setCacheLifetime($this->conf->cache['smarty']['lifetime']); // 1 hour
 			} else {
 				$this->setCacheLifetime(3600); // 1 hour
 			}
-			if ($this->conf->caching_file) {
+			if ($this->conf->cache['smarty']['driver']=='files') {
 				$this->setCaching(true);
 				$this->setCompileCheck(false);
 			}
@@ -93,13 +91,10 @@ class Template extends \Smarty {
 		}
 
 		// Set template variables
-//		$this->assign('template', TEMPLATE); // assign front template name
 		$this->assign('BASE_URL', BASE_URL);
-//		define('BASE_PATH', after("http://".$_SERVER['HTTP_HOST'], BASE_URL));
 		$this->assign('BASE_PATH', BASE_PATH);
 		$this->assign('BASE_URL_SSL', 'https://'.after('http://', BASE_URL));
 		$this->assign('conf',$this->conf);
-//		$this->assign('ref_url',$ref_url);
 	}
 
 	/**
@@ -116,6 +111,7 @@ class Template extends \Smarty {
 			parent::clearCache($template);
 		}
 		if (!$cache_id) {
+			$cache_id=$_SERVER['REQUEST_URI'];
 //			$cache_id = md5($_SESSION['language'].'_'.$_SESSION['ref_url']);
 		}
 		parent::display($template, $cache_id, $compile_id, $parent);
