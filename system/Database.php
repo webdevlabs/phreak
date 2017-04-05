@@ -1,12 +1,15 @@
 <?php
 namespace System;
+use DI\Container;
 
 class Database {
-    public function __construct (Config $conf) {
-        $this->conf = $conf;
+    public function __construct (Container $container) {
+        $this->conf = $container->get('System\Config');
+        $this->log = $container->get('System\Logger');
     }
 
     public function connect () {
+        if ($this->conf->database) {
         /** Create a new PDO connection to MySQL **/
         try {
             $pdo = new \PDO(
@@ -24,9 +27,10 @@ class Database {
             $pdo->exec("SET CHARACTER_SET_CONNECTION=".$this->conf->database['mysql']['charset']);
             $pdo->exec("SET SQL_MODE = ''");
         } catch (\PDOException $err) {
-            die('Unable to connect to database: ' . $err->getMessage());
+            $this->log->write('system','error','Unable to connect to database: ' . $err->getMessage());
         }
 
         return $pdo;    
+    }
     }
 }

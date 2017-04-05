@@ -23,14 +23,14 @@ error_reporting(E_ALL & ~E_NOTICE); // Show all except notice
 /**
  * Load BASE config first
  */
-include __DIR__ . '/config/base.php';
+require_once __DIR__ . '/config/base.php';
 
 /**
  * Load AutoLoaders
  */
-include __DIR__ . '/system/functions.php';
-include __DIR__ . '/system/autoload.php';
-include __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/system/functions.php';
+require_once __DIR__ . '/system/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 /**
  * Load Dependency Injector Container (PHP-DI)
@@ -38,12 +38,14 @@ include __DIR__ . '/vendor/autoload.php';
 $container = DI\ContainerBuilder::buildDevContainer();
 
 /**
- * Load System Configs
+ * Load System Config
  */
-include __DIR__ . '/config/system.php';
-include __DIR__ . '/config/cache.php';
-include __DIR__ . '/config/database.php';
 $config = $container->get('System\Config');
+
+/**
+ * Load System Logger
+ */
+$logger = $container->get('System\Logger');
 
 /**
  * Load Cache Library (Stash)
@@ -51,12 +53,13 @@ $config = $container->get('System\Config');
 $cachedriver = new Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cachedir']]);
 $cache = new Stash\Pool($cachedriver);
 
+
 /**
  * Load Database
  * Create a new PDO connection to MySQL
  * Create a new static DB class object
  */
-System\DB::$c = (new System\Database($config))->connect();
+System\DB::$c = (new System\Database($container))->connect();
 
 /**
  * Load System Language 
@@ -99,7 +102,7 @@ $modules->loadRoutes($router);
 /**
  * Cache Routes
  */
-if ($config->system['cache_routes']) {
+if ($config->system['cache_routes']) {    
     $item = $cache->getItem('routes');
     $routesData = $item->get();
     if ($item->isMiss()) {
@@ -121,10 +124,10 @@ $dispatcher = new Phroute\Phroute\Dispatcher($routesData, $resolver);
 /**
  * Load Middlewares
  */
-//Create a relay dispatcher and add some middlewares:
 use Psr7Middlewares\Middleware;
 $relay = new Relay\RelayBuilder();
 
+//Create a relay dispatcher and add some middlewares
 $relaydispatcher = $relay->newInstance([
     Middleware::basePath(BASE_PATH),
     Middleware::trailingSlash(),
@@ -132,4 +135,5 @@ $relaydispatcher = $relay->newInstance([
     new System\Middlewares\LanguageDetect($language),
     new System\Middlewares\Phroute($dispatcher)    
 ]);
+
 $response = $relaydispatcher($request, $response);

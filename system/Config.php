@@ -26,7 +26,6 @@ class Config {
 	}
 
     public function build ($conf) {
-//        echo "Building conf...<br/>";
         foreach ($this->configfiles as $cfgkey => $cfgfile) {
             if (is_readable($cfgfile)) {
                 $conf[$cfgkey]=include($cfgfile);

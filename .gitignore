@@ -1,4 +1,6 @@
 vendor/*
+config/*.php
+!config/base.php
 storage/cache/smarty/*
 storage/cache/stash/*
 storage/languages/*

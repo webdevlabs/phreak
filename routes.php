@@ -1,4 +1,7 @@
 <?php
+/**
+ * DEFAULT ROUTES
+ */
 
 // Add default homepage route
 $router->get('/', ['App\HomeController','showIndex']);
