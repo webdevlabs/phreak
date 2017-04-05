@@ -9,7 +9,8 @@ class Config {
         $this->configfiles = [
             'system'=>ROOT_DIR.'/config/system.php',
             'cache'=>ROOT_DIR.'/config/cache.php',
-            'database'=>ROOT_DIR.'/config/database.php'
+            'database'=>ROOT_DIR.'/config/database.php',
+            'session'=>ROOT_DIR.'/config/session.php'
         ];
         $this->conf = [
             'site_url'=>BASE_URL,

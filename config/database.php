@@ -5,6 +5,6 @@ return [
         'dbname'=>'phreak',
         'username'=>'root',
         'password'=>'',
-        'charset'=>'utf-8'
+        'charset'=>'utf8'
     ]
 ];

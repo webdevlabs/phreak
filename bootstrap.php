@@ -11,6 +11,8 @@
  * 
  */
 
+if (version_compare(phpversion(), '5.6.0', '<')) { die('PHP5.6+ Required! PHP7 Recommended.'); }
+
 /**
  * Display errors (disable it on production)
  */
@@ -50,6 +52,13 @@ $cachedriver = new Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cac
 $cache = new Stash\Pool($cachedriver);
 
 /**
+ * Load Database
+ * Create a new PDO connection to MySQL
+ * Create a new static DB class object
+ */
+System\DB::$c = (new System\Database($config))->connect();
+
+/**
  * Load System Language 
  */
 $language=$container->get('System\Language');
@@ -60,10 +69,9 @@ $language=$container->get('System\Language');
 $response = new Zend\Diactoros\Response();
 $response = $response
     ->withHeader('Content-Type', 'text/html')
-    ->withAddedHeader('X-Phreak-KEY', SITE_KEY)
+    ->withAddedHeader('X-Phreak-KEY', $config->system['site_key'])
     ->withHeader('Cache-Control', 'private, max-age=3600, must-revalidate');
 $request = Zend\Diactoros\ServerRequestFactory::fromGlobals();
-
 $requestURI=$request->getUri()->getPath();
 
 /**
@@ -83,13 +91,15 @@ require_once ROOT_DIR.'/routes.php';
 // $session->set('requestURI',$requestURI);
 
  /**
-  * Load System Modules
+  * Load System Modules and Routes
   */
 $modules = $container->get('\System\Modules');
 $modules->loadRoutes($router);
 
+/**
+ * Cache Routes
+ */
 if ($config->system['cache_routes']) {
-    // Cache the routes data
     $item = $cache->getItem('routes');
     $routesData = $item->get();
     if ($item->isMiss()) {

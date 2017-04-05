@@ -21,7 +21,7 @@ class SessionHandler extends \SessionHandler {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function __construct(Config $conf) {
 		if (!extension_loaded('openssl')) {
 			throw new \RuntimeException(sprintf("You need the OpenSSL extension to use %s", __class__));
 		}
@@ -29,17 +29,11 @@ class SessionHandler extends \SessionHandler {
 			throw new \RuntimeException(sprintf("You need the Multibytes extension to use %s", __class__));
 		}
 		if (session_id() === '') {
-			ini_set('session.use_only_cookies', 'On');
-			ini_set('session.use_cookies', 'On');
-			ini_set('session.use_trans_sid', 'Off');
-			ini_set('session.cookie_httponly', 'On');
-			ini_set('session.save_handler', 'files');
-			ini_set('session.gc_probability', 'On');
-	//		ini_set('session.cookie_lifetime', '2592000'); // 1800 seconds = 30mins
-	//		ini_set('session.gc_maxlifetime', '2592000'); // 2592000 = 30 days
-			$sessionPath = sys_get_temp_dir();
-			ini_set('session.save_path', $sessionPath);
-			session_save_path($sessionPath);
+			// ini_set session config values
+			foreach ($conf->session as $skey => $sval) {
+				ini_set('session.'.$skey, $sval);	
+			}
+			session_save_path($conf->session['save_path']);
 		}
 	}
 

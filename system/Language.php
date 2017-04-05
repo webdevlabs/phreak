@@ -9,6 +9,7 @@ class Language {
         $this->conf = $conf;
         $this->default = 'en';
         $this->current = $this->default;
+//        $langs=DB::fetch('SELECT * from `languages`');
     }
     
 }
