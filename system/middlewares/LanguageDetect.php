@@ -36,7 +36,6 @@ class LanguageDetect
     {
         $language = null;
         $uri = $request->getUri();
-
             $path = ltrim($uri->getPath(), '/');
             $dirs = explode('/', $path, 2);
             $first = strtolower(array_shift($dirs));

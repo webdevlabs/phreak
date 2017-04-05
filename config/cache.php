@@ -12,6 +12,6 @@ return [
         'port'=>'6379'        
     ],
     'stash'=>[
-        'cachedir'=>'storage/cache/stash'
+        'cachedir'=>ROOT_DIR.'/storage/cache/stash'
     ]
 ];

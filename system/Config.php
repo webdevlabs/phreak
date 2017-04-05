@@ -2,32 +2,36 @@
 namespace System;
 
 class Config {
-   	public static $conf;
+   	public $conf;
+    private $configfiles;
 
     public function __construct () {
-        Config::$conf = [
+        $this->configfiles = [
+            'system'=>ROOT_DIR.'/config/system.php',
+            'cache'=>ROOT_DIR.'/config/cache.php',
+            'database'=>ROOT_DIR.'/config/database.php'
+        ];
+        $this->conf = [
             'site_url'=>BASE_URL,
             'site_title'=>'Phreak! ultralight and lightning fast PHP framework'
         ];
+        $this->conf = $this->build($this->conf);
     }
 
 	public function __get($name) {
-		if (@array_key_exists($name, Config::$conf)) {
-			return Config::$conf[$name];
+		if (@array_key_exists($name, $this->conf)) {
+			return $this->conf[$name];
 		}
 	}
 
-    public function build () {
-        if (is_readable(ROOT_DIR.'/config/system.php')) {
-            $conf['system']=include(ROOT_DIR.'/config/system.php');
+    public function build ($conf) {
+//        echo "Building conf...<br/>";
+        foreach ($this->configfiles as $cfgkey => $cfgfile) {
+            if (is_readable($cfgfile)) {
+                $conf[$cfgkey]=include($cfgfile);
+            }
         }
-        if (is_readable(ROOT_DIR.'/config/database.php')) {
-            $conf['database']=include(ROOT_DIR.'/config/database.php');
-        }
-        if (is_readable(ROOT_DIR.'/config/cache.php')) {
-            $conf['cache']=include(ROOT_DIR.'/config/cache.php');
-        }
-//        Config::$conf = $conf;
+        return $conf;
     }
 
 }

@@ -11,28 +11,43 @@
  * 
  */
 
+/**
+ * Display errors (disable it on production)
+ */
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE); // Show all except notice
 
+/**
+ * Load BASE config first
+ */
+include __DIR__ . '/config/base.php';
 
-include __DIR__ . '/config/system.php';
-include __DIR__ . '/config/cache.php';
-include __DIR__ . '/config/database.php';
+/**
+ * Load AutoLoaders
+ */
 include __DIR__ . '/system/functions.php';
 include __DIR__ . '/system/autoload.php';
 include __DIR__ . '/vendor/autoload.php';
 
 /**
- * Load Cache Library (Stash)
- */
-$cachedriver = new Stash\Driver\FileSystem(['path'=>ROOT_DIR.'/storage/cache/stash']);
-$cache = new Stash\Pool($cachedriver);
-
-/**
  * Load Dependency Injector Container (PHP-DI)
  */
 $container = DI\ContainerBuilder::buildDevContainer();
+
+/**
+ * Load System Configs
+ */
+include __DIR__ . '/config/system.php';
+include __DIR__ . '/config/cache.php';
+include __DIR__ . '/config/database.php';
+$config = $container->get('System\Config');
+
+/**
+ * Load Cache Library (Stash)
+ */
+$cachedriver = new Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cachedir']]);
+$cache = new Stash\Pool($cachedriver);
 
 /**
  * Load System Language 
@@ -73,8 +88,7 @@ require_once ROOT_DIR.'/routes.php';
 $modules = $container->get('\System\Modules');
 $modules->loadRoutes($router);
 
-$route_caching=true;
-if ($route_caching) {
+if ($config->system['cache_routes']) {
     // Cache the routes data
     $item = $cache->getItem('routes');
     $routesData = $item->get();
@@ -88,7 +102,7 @@ if ($route_caching) {
     $routesData=$router->getData();
 }
 
-// Use custom router resolver with dependency injection 
+// Use custom router resolver with dependency injection container
 $resolver = new System\RouterResolver($container);
 
 // Create Route Dispatcher object

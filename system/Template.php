@@ -98,7 +98,7 @@ class Template extends \Smarty {
 //		define('BASE_PATH', after("http://".$_SERVER['HTTP_HOST'], BASE_URL));
 		$this->assign('BASE_PATH', BASE_PATH);
 		$this->assign('BASE_URL_SSL', 'https://'.after('http://', BASE_URL));
-		$this->assign('conf',Config::$conf);
+		$this->assign('conf',$this->conf);
 //		$this->assign('ref_url',$ref_url);
 	}
 
