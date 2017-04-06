@@ -72,7 +72,7 @@ function ByteSize($bytes, $type_only=false)  {
       }
     }
     elseif ($size / 1024 / 1024 < 1024) {
-      if ($type_only == false) {
+      if ($type_only === false) {
         $size = number_format($size / 1024 / 1024, 2);
 //				$size .= ' GB';
       }else{
