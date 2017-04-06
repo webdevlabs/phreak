@@ -94,6 +94,11 @@ class Template extends \Smarty {
 		$this->assign('BASE_PATH', BASE_PATH);
 		$this->assign('BASE_URL_SSL', 'https://'.after('http://', BASE_URL));
 		$this->assign('conf',$this->conf);
+		if (count($this->conf->template['assign'])) {
+			foreach ($this->conf->template['assign'] as $tkey => $tval) {
+				$this->assign($tkey, $tval);
+			}
+		}
 	}
 
 	/**

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{$BASE_URL}/assets/favicon.ico">
 
-    <title>Phreak! the ultimate development tool for lamez :)</title>
+    <title>{$site_title} {$site_slogan}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{$BASE_URL}/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -44,16 +44,16 @@
                   <li {if $requestURI eq '/admin'}class="active"{/if}><a href="{$baseurl}/admin">Admin</a></li>
                   <li {if $requestURI eq '/admin/dashboard'}class="active"{/if}><a href="{$baseurl}/admin/dashboard">Dashboard</a></li>
                   <li {if $requestURI eq '/test'}class="active"{/if}><a href="{$baseurl}/test">test</a></li>
-                  <li><a href="#">({$language})</a></li>
+                  <li class="badge">{$language}</li>
                 </ul>
               </nav>
             </div>
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Phreak!</h1>
+            <h1 class="cover-heading">{$site_title}</h1>
             <p class="lead">
-            <h3>the ultimate development tool for lamez :)</h3>
+            <h3>{$site_slogan}</h3>
               <p>ultra-light fast php framework powered by:</p>
               <div class="features">
               <dl class="dl-horizontal">
@@ -81,6 +81,7 @@
 
           <div class="inner">
           <h3>{$page_content}</h3>
+          {* $conf->system.site_key *}
           </div>
 
           <div class="mastfoot">

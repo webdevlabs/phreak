@@ -1,0 +1,20 @@
+<?php
+/**
+ * TEMPLATE CONFIG 
+ */ 
+return [
+    'template_dir'=>ROOT_DIR.'/app/views',
+    'plugins_dir'=>ROOT_DIR."/plugins/smarty",
+    'languages_dir'=>ROOT_DIR."/storage/language",
+    'cache_dir'=>ROOT_DIR.'/storage/cache/smarty',
+    'compile_dir'=>ROOT_DIR.'/storage/cache/smarty',        
+    'cache_lifetime'=>'3600',
+    // false|files|apc|memcache|redis|pdo
+    'caching'=>false, 
+    // you can assign simple custom template variables here for example {$BASE_URL}
+    'assign'=>[
+        'BASE_URL'=>BASE_URL,
+        'site_title'=>'Phreak!',
+        'site_slogan'=>'the ultimate development tool for lamez :)'
+        ]
+];
