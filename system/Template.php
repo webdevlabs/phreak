@@ -11,7 +11,6 @@
 namespace System;
 
 class Template extends \Smarty {
-	private $req;
 	private $conf;
 
 	public function __construct (Config $conf, Language $language) {
@@ -44,7 +43,8 @@ class Template extends \Smarty {
 		// if not logged in as admin
 		if (!$_SESSION['admin_id'] > "0") {
 			if ($this->conf->encode_output_emails == '1') {
-				$this->registerFilter("output", array($this, 'protect_email')); // encode email addresses
+//				$this->registerFilter("output", array($this, 'protect_email')); // encode email addresses
+				$this->loadFilter('output', 'protect_email');
 			}
 		}
 
@@ -52,10 +52,12 @@ class Template extends \Smarty {
 //		if (!$this->url->inAdmin) {
 		if ('tova_ne_e_vadmin'!=='da') {
 			if ($this->conf->combine_js) {
-				$this->registerFilter("output", array($this, 'combine_js')); // enable combine_js
+//				$this->registerFilter("output", array($this, 'combine_js')); // enable combine_js
+				$this->loadFilter('output', 'combine_js');
 			}
 			if ($this->conf->combine_css) {
-				$this->registerFilter("output", array($this, 'combine_css')); // enable combine_css
+//				$this->registerFilter("output", array($this, 'combine_css')); // enable combine_css
+				$this->loadFilter('output', 'combine_css');
 			}
 			// Cache settings
 			if ($this->conf->cache['smarty']['lifetime'] > 0) {
@@ -90,9 +92,6 @@ class Template extends \Smarty {
 		}
 
 		// Set template variables
-//		$this->assign('BASE_URL', BASE_URL);
-//		$this->assign('BASE_PATH', BASE_PATH);
-//		$this->assign('BASE_URL_SSL', 'https://'.after('http://', BASE_URL));
 		$this->assign('conf',$this->conf);
 		// Go through config/template.php "assign" section and assign template values 
 		if (count($this->conf->template['assign'])) {
@@ -142,154 +141,5 @@ class Template extends \Smarty {
 		$this->assign('msg', $message);
 	}
 
-	function basic_count($params) {
-		return count($params['data']);
-	}
-
-	/**
-	 * Round money string
-	 *
-	 * @param float $params
-	 * @return float
-	 */
-	function roundmoney($params) {
-		return number_format($params, 0, '.', ' ');
-	}
-
-	/**
-	 * Fetch E-Mail template from DB
-	 *
-	 * @param string $template_name
-	 * @param array $tvars template variables
-	 * @return array
-	 */
-	public function email_template($template_name, $tvars) {
-		// manualy load smarty resource email
-		//		require_once(ROOT_DIR.'/includes/smarty_resource_email.php');
-
-		// Parse Email Template
-		$tpl_email = new_smarty('smartyonly');
-		$tpl_email->force_compile = true;
-		//  	$tpl_email->registerResource("email", new Smarty_Resource_Email());
-
-		// assign additional template variables
-		foreach ($tvars as $key => $val) {
-			$tpl_email->assign("{$key}", $val);
-		}
-		//		$tpl_email->assign('password', $password);
-		$subject = $tpl_email->fetch("email:subject/".$template_name);
-		$email_message = $tpl_email->fetch("email:source/".$template_name);
-		$from_email = DB::row("SELECT `from_email` from `email_templates` WHERE `tpl_name`='member_register'");
-		return array(
-			'from_email' => $from_email,
-			'subject' => $subject,
-			'message' => $email_message);
-	}
-
-	/**
-	 * Encode email addresses template function
-	 *
-	 * @param string $tpl_output
-	 * @param obj $template smarty template obj
-	 * @return string
-	 */
-	function protect_email($tpl_output, \Smarty_Internal_Template $template) {
-		$tpl_output = preg_replace('!(\S+)@([a-zA-Z0-9\.\-]+\.([a-zA-Z]{2,3}|[0-9]{1,3}))!', '$1<span class="hidden">'.rand().'</span>@<span class="hidden">'.rand().'</span>$2', $tpl_output);
-		return $tpl_output;
-	}
-
-	/**
-	 * Minify HTML template function
-	 *
-	 * @param string $tpl_output
-	 * @param obj $template smarty template obj
-	 * @return string
-	 */
-	function minify_html($tpl_output, \Smarty_Internal_Template $template) {
-		$tpl_output = preg_replace('![\t ]*[\r\n]+[\t ]*!', '', $tpl_output);
-		return $tpl_output;
-	}
-
-	/**
-	 * CSS Combine + Minify template function
-	 *
-	 * @param string $tpl_output
-	 * @param obj $template smarty template obj
-	 * @return string
-	 */
-	function combine_css($tpl_output, \Smarty_Internal_Template $template) {
-		$n = preg_match_all('/<link[^>]*href="([^"]*)\.css"[^>]*>/', $tpl_output, $matches);
-		if (($n !== false && $n > 0) && (!file_exists(ROOT_DIR.'/front/views/'.TEMPLATE.'/cache/front.css'))) {
-			$csscombined = "/* bgCMS Auto-Generated CSS File */\n";
-			foreach ($matches[1] as $match) {
-				if (strpos($match, BASE_URL) !== false) {
-					// read all css files and combine them
-					$csscombined .= file_get_contents(ROOT_DIR.after(BASE_URL, $match).'.css');
-				}
-			}
-			file_put_contents(ROOT_DIR.'/front/views/'.TEMPLATE.'/cache/front.css', $csscombined);
-		}
-		$newsrc = $tpl_output;
-		foreach ($matches[0] as $match) {
-			if (strpos($match, BASE_URL) !== false) {
-				$newsrc = str_replace($match, '', $newsrc);
-			}
-		}
-		clearstatcache();
-		$filectime = filectime(ROOT_DIR.'/front/views/'.TEMPLATE.'/cache/front.css');
-		$newsrc = str_replace('</head>', '<link href="'.BASE_URL.'/front/views/'.TEMPLATE.'/cache/front.css?'.$filectime.'" rel="stylesheet">'.'</head>', $newsrc);
-		return $newsrc;
-	}
-	/**
-	 * JS Combine template function
-	 *
-	 * @param string $tpl_output
-	 * @param obj $template smarty template obj
-	 * @return string
-	 */
-	function combine_js($tpl_output, \Smarty_Internal_Template $template) {
-		$n = preg_match_all('/<script[^>]*src="([^"]*)\.js"[^>]*><\/script>/', $tpl_output, $matches);
-		if (($n !== false && $n > 0) && (!file_exists(ROOT_DIR.'/front/views/'.TEMPLATE.'/cache/front.js'))) {
-			// create list with js files inside IF IE
-			//   		preg_match_all('/if(.|\n)*?endif/', $tpl_output, $ifinsiders);
-			$jscombined = "/* bgCMS Auto-Generated JS File */\n";
-			foreach ($matches[1] as $match) {
-				if (after_last('/', $match) == 'require') {
-					continue;
-				}
-				if (strpos($match, BASE_URL) !== false) {
-					// read all javascript files and combine them
-					$jscombined .= file_get_contents(ROOT_DIR.after(BASE_URL, $match).'.js');
-				}
-			}
-			file_put_contents(ROOT_DIR.'/front/views/'.TEMPLATE.'/cache/front.js', $jscombined);
-		}
-		$newsrc = $tpl_output;
-		foreach ($matches[0] as $match) {
-			if (strpos($match, 'require.js') !== false) {
-				continue;
-			}
-			if (strpos($match, BASE_URL) !== false) {
-				// read all javascript and remove from html source
-				$newsrc = str_replace($match, '', $newsrc);
-			}
-		}
-		clearstatcache();
-		$filectime = filectime(ROOT_DIR.'/front/views/'.TEMPLATE.'/cache/front.js');
-		$newsrc = str_replace('</body>', '<script src="'.BASE_URL.'/front/views/'.TEMPLATE.'/cache/front.js?'.$filectime.'" async></script>'.'</body>', $newsrc);
-		return $newsrc;
-	}
-	function async_css_load($tpl_output, \Smarty_Internal_Template $template) {
-		$n = preg_match_all('/<link[^>]*href="([^"]*)\.css"[^>]*>/', $tpl_output, $matches);
-		$newsrc = $tpl_output;
-		if ($n !== false && $n > 0) {
-			foreach ($matches[1] as $match) {
-				if (strpos($match, BASE_URL) !== false) {
-					$newsrc = str_replace($match, '<link href="'.$match.'" rel="preload" as="style" onload="this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="'.$match.'" rel="stylesheet"></noscript>', $newsrc);
-				}
-			}
-		}
-		return $newsrc;
-	}
 	// ---------- EOF CLASS.TEMPLATE.PHP
 }

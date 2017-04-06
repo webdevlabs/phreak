@@ -253,8 +253,8 @@ function get_processed_content ($file) {
  * @return void
  */
 function array_map_recursive(callable $func, array $arr) {
-    array_walk_recursive($arr, function(&$v) use ($func) {
-        $v = $func($v);
+    array_walk_recursive($arr, function(&$outp) use ($func) {
+        $outp = $func($outp);
     });
     return $arr;
 }

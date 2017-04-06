@@ -44,7 +44,7 @@ class DB {
 	 * @return array|null
 	 */
 	static function column($query, $params = null, $key = 0) {
-		if ($statement = DB::query($query, $params)) {
+		if ($statement = self::query($query, $params)) {
 			return $statement->fetchColumn($key);
 		}
 	}
@@ -57,7 +57,7 @@ class DB {
 	 * @return mixed
 	 */
 	static function row($query, $params = null) {
-		if ($statement = DB::query($query, $params)) {
+		if ($statement = self::query($query, $params)) {
 			return $statement->fetch();
 		}
 	}
@@ -72,7 +72,7 @@ class DB {
 	 */
 	static function pairs($query, $params = null) {
 		$data = array();
-		if ($statement = DB::query($query, $params)) {
+		if ($statement = self::query($query, $params)) {
 			while ($row = $statement->fetch(\PDO::FETCH_NUM)) {
 				$data[$row[0]] = $row[1];
 			}
@@ -89,7 +89,7 @@ class DB {
 	 * @return array
 	 */
 	static function fetch($query, $params = null, $column = null) {
-		if (!$statement = DB::query($query, $params)) {
+		if (!$statement = self::query($query, $params)) {
 			return;
 		}
 
@@ -110,7 +110,7 @@ class DB {
 	 * @return object|null
 	 */
 	static function query($query, $params = null) {
-		$statement = static::$c->prepare(DB::$q[] = strtr($query, '`', DB::$i));
+		$statement = static::$c->prepare(self::$q[] = strtr($query, '`', self::$i));
 		$statement->execute($params);
 		return $statement;
 	}
@@ -124,7 +124,7 @@ class DB {
 	 */
 	static function insert($table, array $data) {
 		$query = "INSERT INTO `$table` (`".implode('`, `', array_keys($data)).'`) VALUES ('.rtrim(str_repeat('?, ', count($data = array_values($data))), ', ').')';
-		return DB::$p ? DB::column($query.' RETURNING `id`', $data) : (DB::query($query, $data) ? static::$c->lastInsertId() : null);
+		return self::$p ? self::column($query.' RETURNING `id`', $data) : (self::query($query, $data) ? static::$c->lastInsertId() : null);
 	}
 
 	/**
@@ -137,7 +137,7 @@ class DB {
 	 */
 	static function update($table, $data, $value, $column = 'id') {
 		$keys = implode('`=?,`', array_keys($data));
-		if ($statement = DB::query("UPDATE `$table` SET `$keys` = ? WHERE `$column` = ?", array_values($data + array($value)))) {
+		if ($statement = self::query("UPDATE `$table` SET `$keys` = ? WHERE `$column` = ?", array_values($data + array($value)))) {
 			return $statement->rowCount();
 		}
 

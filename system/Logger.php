@@ -23,8 +23,8 @@ class Logger {
 	 * $this->log->write('system.errors','warning','user is trying to select non existing language');
 	 */
 	function write($file, $type, $content) {
-		$bt = debug_backtrace();
-		$caller = array_shift($bt);
+		$backtrace = debug_backtrace();
+		$caller = array_shift($backtrace);
 		$caller['file'] = after(ROOT_DIR, $caller['file']);
 		$ipaddr = $_SERVER['REMOTE_ADDR'];
 		$ref = $_SERVER['HTTP_REFERER'];
@@ -35,38 +35,15 @@ class Logger {
 		$now = date('H:m:s');
 		$content = "($type) <$now> (IP: $ipaddr) | Req: $reqdata | Src: $caller[file] (Line: $caller[line]) \n $content \n--------------------\n";
 		if (!$handle = fopen($filename, 'a')) {
-			$err_msg = "Cannot open file ($filename)";
-			echo $err_msg;
-			exit;
+			$errMsg = "Cannot open file ($filename)";
 		}
 		// Write $somecontent to our opened file.
 		if (fwrite($handle, $content) === false) {
-			$err_msg = "Cannot write to file ($filename)";
-			$this->write('log', 'error', $err_msg);
-			echo $err_msg;
-			exit;
+			$errMsg = "Cannot write to file ($filename)";
+			$this->write('log', 'error', $errMsg);
 		}
 		fclose($handle);
-	}
-
-	/**
-	 * Read Log file
-	 *
-	 * @param string $file filename
-	 * @return array
-	 */
-	function read($file) {
-		$filename = ROOT_DIR."/uploads/logs/$file";
-		$contents = file($filename);
-		$logs = array();
-		foreach ($contents as $line_num => $line) {
-			$log['ctime'] = before('|', $line);
-			$log['line'] = after('|', $line);
-			$log['line'] = nl2br("$log[line]");
-			array_push($logs, $log);
-		}
-		$logs = sortArrayByField($logs, 'ctime', true);
-		return $logs;
+		return $errMsg;
 	}
 
 }
