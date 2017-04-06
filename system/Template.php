@@ -112,18 +112,17 @@ class Template extends \Smarty {
 	 * @return mixed
 	 */
 	function display($template = null, $cache_id = null, $compile_id = null, $parent = null) {
-		if ($template == 'errors_js.tpl' or $template == 'errors.tpl') {
+		if ($this->conf->template['nocache'][$template]) {
 			parent::clearCache($template);
 		}
 		if (!$cache_id) {
 			$cache_id=$_SERVER['REQUEST_URI'];
-//			$cache_id = md5($_SESSION['language'].'_'.$_SESSION['ref_url']);
 		}
 		parent::display($template, $cache_id, $compile_id, $parent);
 	}
 
 	/**
-	 * Set template notification message
+	 * Set template notification message (FlashBag)
 	 *
 	 * @param string $message
 	 * @return null
@@ -133,7 +132,7 @@ class Template extends \Smarty {
 	}
 
 	/**
-	 * Show template notification message
+	 * Show template notification message (FlashBag)
 	 *
 	 * @return null
 	 */
