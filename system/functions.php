@@ -15,9 +15,9 @@
  * @return void
  */
 function lang ($value) {
-	$grp=before('.',$value);
-	$val=after('.',$value);
-	return \System\lang::$lang_vars[$grp][$val];
+  $grp=before('.',$value);
+  $val=after('.',$value);
+  return \System\lang::$lang_vars[$grp][$val];
 }
 
 /**
@@ -53,34 +53,34 @@ function convert_to_bytes( $size, $from ) {
  * @return void
  */
 function ByteSize($bytes, $type_only=false)  {
-	$size = $bytes / 1024;
-	if($size < 1024) {
-		if ($type_only == false) {
-			$size = number_format($size, 2);
+  $size = $bytes / 1024;
+  if($size < 1024) {
+    if ($type_only == false) {
+      $size = number_format($size, 2);
 //			$size .= ' KB';
-		}else{
-			$size = 'KB';
-		}
-	}
-	else {
-		if($size / 1024 < 1024) {
-			if ($type_only == false) {
-				$size = number_format($size / 1024, 2);
+    }else{
+      $size = 'KB';
+    }
+  }
+  else {
+    if($size / 1024 < 1024) {
+      if ($type_only == false) {
+        $size = number_format($size / 1024, 2);
 //				$size .= ' MB';
-			}else{
-				$size = 'MB';
-			}
-		}
-		elseif ($size / 1024 / 1024 < 1024) {
-			if ($type_only == false) {
-				$size = number_format($size / 1024 / 1024, 2);
+      }else{
+        $size = 'MB';
+      }
+    }
+    elseif ($size / 1024 / 1024 < 1024) {
+      if ($type_only == false) {
+        $size = number_format($size / 1024 / 1024, 2);
 //				$size .= ' GB';
-			}else{
-				$size = 'GB';
-			}
-		}
-	}
-	return $size;
+      }else{
+        $size = 'GB';
+      }
+    }
+  }
+  return $size;
 }
 
 // after ('@', 'biohazard@online.ge');
@@ -88,10 +88,10 @@ function ByteSize($bytes, $type_only=false)  {
 // from the first occurrence of '@'
 function after ($dthis, $inthat) {
        if (!is_bool(@strpos($inthat, $dthis))) {
-       	return @substr($inthat, @strpos($inthat,$dthis)+strlen($dthis));
+         return @substr($inthat, @strpos($inthat,$dthis)+strlen($dthis));
        }else{
-			return $inthat;
-		}
+      return $inthat;
+    }
 }
 
 // after_last ('[', 'sin[90]*cos[180]');
@@ -100,27 +100,27 @@ function after ($dthis, $inthat) {
 function after_last ($dthis, $inthat) {
         if (!is_bool(strrevpos($inthat, $dthis))) {
          return substr($inthat, strrevpos($inthat, $dthis)+strlen($dthis));
-    	}else{
-			return $inthat;
-		}
+      }else{
+      return $inthat;
+    }
 }
 
 function before ($dthis, $inthat) {
        if (!is_bool(strrevpos($inthat, $dthis))) {
-	       return substr($inthat, 0, strpos($inthat, $dthis));
-	    }else{
-			return $inthat;
-		}
+         return substr($inthat, 0, strpos($inthat, $dthis));
+      }else{
+      return $inthat;
+    }
 }
 
 // returns 'sin[90]*cos['
 // from the last occurrence of '['
 function before_last ($dthis, $inthat) {
        if (!is_bool(strrevpos($inthat, $dthis))) {
-       	return substr($inthat, 0, strrevpos($inthat, $dthis));
+         return substr($inthat, 0, strrevpos($inthat, $dthis));
        }else{
-			return $inthat;
-		}
+      return $inthat;
+    }
 }
 
 // between ('@', '.', 'biohazard@online.ge');
@@ -188,10 +188,10 @@ function sortArrayByField ($original, $field, $descending = false) {
  * @return void
  */
 function percent($num_amount, $num_total) {
-	$count1 = $num_amount / 100;
-	$count2 = $count1 * $num_total;
-	$count = number_format($count2, 0);
-	return $count;
+  $count1 = $num_amount / 100;
+  $count2 = $count1 * $num_total;
+  $count = number_format($count2, 0);
+  return $count;
 }
 
 /**
@@ -202,33 +202,33 @@ function percent($num_amount, $num_total) {
  * @return void
  */
 function generatePassword($length=9, $strength=0) {
-	$vowels = 'aeuy';
-	$consonants = 'bdghjmnpqrstvz';
-	if ($strength & 1) {
-		$consonants .= 'BDGHJLMNPQRSTVWXZ';
-	}
-	if ($strength & 2) {
-		$vowels .= "AEUY";
-	}
-	if ($strength & 4) {
-		$consonants .= '23456789';
-	}
-	if ($strength & 8) {
-		$consonants .= '@#$%';
-	}
+  $vowels = 'aeuy';
+  $consonants = 'bdghjmnpqrstvz';
+  if ($strength & 1) {
+    $consonants .= 'BDGHJLMNPQRSTVWXZ';
+  }
+  if ($strength & 2) {
+    $vowels .= "AEUY";
+  }
+  if ($strength & 4) {
+    $consonants .= '23456789';
+  }
+  if ($strength & 8) {
+    $consonants .= '@#$%';
+  }
 
-	$password = '';
-	$alt = time() % 2;
-	for ($i = 0; $i < $length; $i++) {
-		if ($alt == 1) {
-			$password .= $consonants[(rand() % strlen($consonants))];
-			$alt = 0;
-		} else {
-			$password .= $vowels[(rand() % strlen($vowels))];
-			$alt = 1;
-		}
-	}
-	return $password;
+  $password = '';
+  $alt = time() % 2;
+  for ($i = 0; $i < $length; $i++) {
+    if ($alt == 1) {
+      $password .= $consonants[(rand() % strlen($consonants))];
+      $alt = 0;
+    } else {
+      $password .= $vowels[(rand() % strlen($vowels))];
+      $alt = 1;
+    }
+  }
+  return $password;
 }
 
 /**
@@ -238,11 +238,11 @@ function generatePassword($length=9, $strength=0) {
  * @return void
  */
 function get_processed_content ($file) {
-	ob_start();
-	include $file;
-	$content = ob_get_contents();
-	ob_end_clean();
-	return $content;
+  ob_start();
+  include $file;
+  $content = ob_get_contents();
+  ob_end_clean();
+  return $content;
 }
 
 /**
@@ -268,7 +268,7 @@ function array_map_recursive(callable $func, array $arr) {
 function utf8_converter($array) {
     array_walk_recursive($array, function(&$item, $key) {
         if(!mb_detect_encoding($item, 'utf-8', true)){
-        	$item = utf8_encode($item);
+          $item = utf8_encode($item);
         }
     });
     return $array;
@@ -282,7 +282,7 @@ function utf8_converter($array) {
  */
 function execInBackground($cmd) {
     if (substr(php_uname(), 0, 7) == "Windows"){
-		pclose(popen("start /B ". $cmd, "r")); 
+    pclose(popen("start /B ". $cmd, "r")); 
     }
     else {
         exec($cmd . " > /dev/null &");  
