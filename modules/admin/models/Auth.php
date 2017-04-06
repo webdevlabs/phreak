@@ -1,5 +1,6 @@
 <?php
 namespace Modules\Admin\Models;
+
 use System\Config;
 
 class Auth {

@@ -55,7 +55,7 @@ function convert_to_bytes( $size, $from ) {
 function ByteSize($bytes, $type_only=false)  {
   $size = $bytes / 1024;
   if($size < 1024) {
-    if ($type_only == false) {
+    if ($type_only === false) {
       $size = number_format($size, 2);
 //			$size .= ' KB';
     }else{
@@ -64,7 +64,7 @@ function ByteSize($bytes, $type_only=false)  {
   }
   else {
     if($size / 1024 < 1024) {
-      if ($type_only == false) {
+      if ($type_only === false) {
         $size = number_format($size / 1024, 2);
 //				$size .= ' MB';
       }else{

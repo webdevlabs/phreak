@@ -1,7 +1,6 @@
 <?php
 namespace App;
 use System\Template;
-use System\Config;
 
 class HomeController {
     private $template;
@@ -18,7 +17,7 @@ class HomeController {
             'page_title'=>$title,
             'page_content'=>$msg
         ]);
-        return $this->template->display('layout.tpl');
+        $this->template->display('layout.tpl');
     }    
 
 }

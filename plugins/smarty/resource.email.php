@@ -42,4 +42,3 @@ class Smarty_Resource_Email extends Smarty_Resource_Custom {
 }
 
 }
-?>

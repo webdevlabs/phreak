@@ -1,7 +1,7 @@
 <?php
 namespace Modules\Admin\Controllers;
+
 use System\Template;
-use System\Config;
 
 class Dashboard {
     private $template;

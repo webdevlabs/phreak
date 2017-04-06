@@ -309,5 +309,3 @@ class socketWebSocket extends socket
 		parent::console($msg,$type);
 	}
 }
-
-?>

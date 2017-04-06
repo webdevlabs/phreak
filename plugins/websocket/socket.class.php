@@ -84,5 +84,3 @@ class socket
 		socket_write($client,$msg,strlen($msg));
 	}
 }
-
-?>
