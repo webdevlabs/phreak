@@ -12,7 +12,8 @@ class Config
             'system'=>ROOT_DIR.'/config/system.php',
             'cache'=>ROOT_DIR.'/config/cache.php',
             'database'=>ROOT_DIR.'/config/database.php',
-            'session'=>ROOT_DIR.'/config/session.php'
+            'session'=>ROOT_DIR.'/config/session.php',
+            'template'=>ROOT_DIR.'/config/template.php'            
         ];
         $this->conf = [
             'site_url'=>BASE_URL,

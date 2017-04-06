@@ -9,7 +9,6 @@
  */
 
 namespace System;
-use DI\Container;
 
 class Template extends \Smarty {
 	private $req;
@@ -31,11 +30,11 @@ class Template extends \Smarty {
 		}		
 		$this->assign('baseurl',$baseurl);
 
-		$this->setTemplateDir(ROOT_DIR.'/app/views/')
-		->setCompileDir($this->conf->cache['smarty']['compiledir'])
-		->setCacheDir($this->conf->cache['smarty']['cachedir'])
-		->setConfigDir(ROOT_DIR."/storage/languages")
-		->addPluginsDir(ROOT_DIR."/plugins/smarty");
+		$this->setTemplateDir($this->conf->template['template_dir'])
+		->setCompileDir($this->conf->template['compile_dir'])
+		->setCacheDir($this->conf->template['cache_dir'])
+		->setConfigDir($this->conf->template['languages_dir'])
+		->addPluginsDir($this->conf->template['plugins_dir']);
 
 		// register basic internal functions
 		$this->registerPlugin('function', "show_msg", array($this, 'show_msg'));

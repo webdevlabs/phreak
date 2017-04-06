@@ -20,6 +20,7 @@ copyFiles([
     "config/cache.php.sample"=>"config/cache.php",
     "config/session.php.sample"=>"config/session.php",    
     "config/modules.php.sample"=>"config/modules.php",
+    "config/template.php.sample"=>"config/template.php",    
 ]);
 echo "\nPhreak! has been successfuly installed!\n";
 echo "################ Enjoy! ################\n";
