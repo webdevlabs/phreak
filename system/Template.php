@@ -90,10 +90,11 @@ class Template extends \Smarty {
 		}
 
 		// Set template variables
-		$this->assign('BASE_URL', BASE_URL);
-		$this->assign('BASE_PATH', BASE_PATH);
-		$this->assign('BASE_URL_SSL', 'https://'.after('http://', BASE_URL));
+//		$this->assign('BASE_URL', BASE_URL);
+//		$this->assign('BASE_PATH', BASE_PATH);
+//		$this->assign('BASE_URL_SSL', 'https://'.after('http://', BASE_URL));
 		$this->assign('conf',$this->conf);
+		// Go through config/template.php "assign" section and assign template values 
 		if (count($this->conf->template['assign'])) {
 			foreach ($this->conf->template['assign'] as $tkey => $tval) {
 				$this->assign($tkey, $tval);
