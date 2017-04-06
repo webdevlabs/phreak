@@ -1,6 +1,6 @@
 <?php
 /**
- * Cache functions
+ * Cache functions (currently not used)
  *
  * @package phreak
  * @author Simeon Lyubenov <lyubenov@gmail.com>
@@ -23,18 +23,18 @@ class Cache
 	{
 		switch ($driver) {			
 			case 'memcache':
-				$cachedriver = new Stash\Driver\Memcache([
+				$cachedriver = new \Stash\Driver\Memcache([
 					'servers'=>[
-						$config->cache['memcached']['host'],
-						$config->cache['memcached']['port']
+						$this->conf->cache['memcached']['host'],
+						$this->conf->cache['memcached']['port']
 					]
 				]);
 			break;
 
 			default:
-				$cachedriver = new Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cachedir']]);			
+				$cachedriver = new \Stash\Driver\FileSystem(['path'=>$this->conf->cache['stash']['cachedir']]);			
 		}
-		$cache = new Stash\Pool($cachedriver);
+		$cache = new \Stash\Pool($cachedriver);
 		return $cache;		
 	}
 }

@@ -1,11 +1,11 @@
 <?php
 namespace System\Middlewares\PSR15;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Phroute\Phroute\Dispatcher;
-use Phroute\Phroute\Exception\HttpRouteNotFoundException;
-use Phroute\Phroute\Exception\BadRouteException;
+use \Psr\Http\Message\ServerRequestInterface;
+use \Psr\Http\Message\ResponseInterface;
+use \Phroute\Phroute\Dispatcher;
+use \Phroute\Phroute\Exception\HttpRouteNotFoundException;
+use \Phroute\Phroute\Exception\BadRouteException;
 
 class Phroute
 {

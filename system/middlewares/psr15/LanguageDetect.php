@@ -2,8 +2,8 @@
 
 namespace System\Middlewares\PSR15;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use \Psr\Http\Message\ServerRequestInterface;
+use \Psr\Http\Message\ResponseInterface;
 use \System\Language;
 
 /**

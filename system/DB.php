@@ -157,32 +157,4 @@ static function array_keys_prefix($arr) {
     return $rarr;
 }
 
-    /**
-     * Escape DB input
-     *
-     * @param string $value query value
-     * @return string
-     */
-    static function escape($value) {
-        if (is_array($value)) {
-            $newvalue = array_map_recursive($this->escape, $value);
-        } else {
-            $newvalue = str_replace(array(
-                "\\",
-                "\0",
-                "\n",
-                "\r",
-                "\x1a",
-                "'",
-                '"'), array(
-                "\\\\",
-                "\\0",
-                "\\n",
-                "\\r",
-                "\Z",
-                "\'",
-                '\"'), $value);
-        }
-        return $newvalue;
-    }
 }
