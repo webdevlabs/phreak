@@ -41,17 +41,17 @@ $container = DI\ContainerBuilder::buildDevContainer();
 /**
  * Load System Config
  */
-$config = $container->get('System\Config');
+$config = $container->get('\System\Config');
 
 /**
  * Load System Cache Library (Stash)
  */
-$cache = $container->get('System\Cache');
+$cache = $container->get('\System\Cache');
 
 /**
  * Load System Logger
  */
-$logger = $container->get('System\Logger');
+$logger = $container->get('\System\Logger');
 
 /**
  * Load Database
@@ -63,7 +63,7 @@ System\DB::$c = (new System\Database($container))->connect();
 /**
  * Load System Language 
  */
-$language=$container->get('System\Language');
+$language=$container->get('\System\Language');
 
 /**
  * Load HTTP Request/Response libs
