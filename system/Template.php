@@ -12,22 +12,29 @@ namespace System;
 
 class Template extends \Smarty {
     private $conf;
+    private $language;
 
     public function __construct (Config $conf, Language $language) {
         parent::__construct();
         $this->conf = $conf;
+        $this->language = $language;
+        $this->loadSystem();
+    }
 
+    public function loadSystem () {
         $this->setCompileCheck(true); // set true to require smarty check if the template file is modified
         $this->force_compile = false; // set true only for debugging purposes
 
+        // Set template variables
         $this->assign('requestURI',$_SESSION['requestURI']);
-        $this->assign('language',$language->current);
-        if ($language->default !== $language->current) {
-            $baseurl = BASE_URL.'/'.$language->current;
+        $this->assign('language',$this->language->current);
+        if ($this->language->default !== $this->language->current) {
+            $baseurl = BASE_URL.'/'.$this->language->current;
         }else {
             $baseurl = BASE_URL;
         }		
         $this->assign('baseurl',$baseurl);
+        $this->assign('conf',$this->conf);
 
         $this->setTemplateDir($this->conf->template['template_dir'])
         ->setCompileDir($this->conf->template['compile_dir'])
@@ -37,9 +44,6 @@ class Template extends \Smarty {
 
         // register basic internal functions
         $this->registerPlugin('function', "show_msg", array($this, 'show_msg'));
-        $this->registerPlugin('function', "count", array($this, 'basic_count'));
-        $this->registerPlugin('modifier', "roundmoney", array($this, 'roundmoney'));
-//		$this->registerPlugin('modifier', "ago", 'ago');
         // if not logged in as admin
         if (!$_SESSION['admin_id'] > "0") {
             if ($this->conf->encode_output_emails == '1') {
@@ -48,6 +52,17 @@ class Template extends \Smarty {
             }
         }
 
+        $this->setSysCaching();
+
+        // Go through config/template.php "assign" section and assign template values 
+        if (count($this->conf->template['assign'])) {
+            foreach ($this->conf->template['assign'] as $tkey => $tval) {
+                $this->assign($tkey, $tval);
+            }
+        }
+    }
+
+    public function setSysCaching () {
         // if on frontend
 //		if (!$this->url->inAdmin) {
         if ('tova_ne_e_vadmin'!=='da') {
@@ -87,16 +102,6 @@ class Template extends \Smarty {
 
             if ($this->conf->minify_html_front == '1') {
                 $this->loadFilter('output', 'trimwhitespace'); // enable smarty internal html minifier
-            }
-            //		$this->registerFilter("output",array($this,'async_css_load'));
-        }
-
-        // Set template variables
-        $this->assign('conf',$this->conf);
-        // Go through config/template.php "assign" section and assign template values 
-        if (count($this->conf->template['assign'])) {
-            foreach ($this->conf->template['assign'] as $tkey => $tval) {
-                $this->assign($tkey, $tval);
             }
         }
     }
