@@ -41,17 +41,17 @@ $container = DI\ContainerBuilder::buildDevContainer();
 /**
  * Load System Config
  */
-$config = $container->get('\System\Config');
+$config = $container->get('System\Config');
 
 /**
  * Load System Cache Library (Stash)
  */
-$cache = $container->get('\System\Cache');
+$cache = $container->get('System\Cache');
 
 /**
  * Load System Logger
  */
-$logger = $container->get('\System\Logger');
+$logger = $container->get('System\Logger');
 
 /**
  * Load Database
@@ -63,7 +63,7 @@ System\DB::$c = (new System\Database($container))->connect();
 /**
  * Load System Language 
  */
-$language=$container->get('\System\Language');
+$language=$container->get('System\Language');
 
 /**
  * Load HTTP Request/Response libs
@@ -87,14 +87,14 @@ require_once ROOT_DIR.'/routes.php';
 /**
  * Load System Secure Session Handler
  */
- $session = $container->get('\System\Session');
+ $session = $container->get('System\Session');
  $session->start();
  $session->set('admin_id',1);
 
  /**
   * Load System Modules and Routes
   */
-$modules = $container->get('\System\Modules');
+$modules = $container->get('System\Modules');
 $modules->loadRoutes($router);
 
 /**

@@ -47,7 +47,6 @@ class Template extends \Smarty {
         // if not logged in as admin
         if (!$_SESSION['admin_id'] > "0") {
             if ($this->conf->encode_output_emails == '1') {
-//				$this->registerFilter("output", array($this, 'protect_email')); // encode email addresses
                 $this->loadFilter('output', 'protect_email');
             }
         }
@@ -67,11 +66,9 @@ class Template extends \Smarty {
 //		if (!$this->url->inAdmin) {
         if ('tova_ne_e_vadmin'!=='da') {
             if ($this->conf->combine_js) {
-//				$this->registerFilter("output", array($this, 'combine_js')); // enable combine_js
                 $this->loadFilter('output', 'combine_js');
             }
             if ($this->conf->combine_css) {
-//				$this->registerFilter("output", array($this, 'combine_css')); // enable combine_css
                 $this->loadFilter('output', 'combine_css');
             }
             // Cache settings
@@ -146,5 +143,4 @@ class Template extends \Smarty {
         $this->assign('msg', $message);
     }
 
-    // ---------- EOF CLASS.TEMPLATE.PHP
 }
