@@ -46,9 +46,11 @@ $config = $container->get('System\Config');
 /**
  * Load Cache Library (Stash)
  */
-//$cachedriver = new Stash\Driver\Memcache(['servers'=>[$config->cache['memcached']['host'],$config->cache['memcached']['port']]]);
-$cachedriver = new Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cachedir']]);
-$cache = new Stash\Pool($cachedriver);
+//$cachedriver = new \Stash\Driver\Memcache(['servers'=>[$config->cache['memcached']['host'],$config->cache['memcached']['port']]]);
+//$cachedriver = new \Stash\Driver\FileSystem(['path'=>$config->cache['stash']['cachedir']]);
+//$cache = new \Stash\Pool($cachedriver);
+
+$cache = $container->get('System\Cache');
 
 /**
  * Load System Logger

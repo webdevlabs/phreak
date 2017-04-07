@@ -10,18 +10,19 @@
 
 namespace System;
 
-class Cache 
+class Cache extends \Stash\Pool
 {
 	private $conf;
+	protected $driver;
 
 	public function __construct (Config $conf) 
 	{
 		$this->conf = $conf;
+		$this->loadDriver();
 	}
 
-	public function init ($driver) 
-	{
-		switch ($driver) {			
+	public function loadDriver ($type = null) {
+		switch ($type) {			
 			case 'memcache':
 				$cachedriver = new \Stash\Driver\Memcache([
 					'servers'=>[
@@ -34,7 +35,7 @@ class Cache
 			default:
 				$cachedriver = new \Stash\Driver\FileSystem(['path'=>$this->conf->cache['stash']['cachedir']]);			
 		}
-		$cache = new \Stash\Pool($cachedriver);
-		return $cache;		
+		$this->setDriver($cachedriver);
 	}
+
 }

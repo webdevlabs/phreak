@@ -9,6 +9,7 @@ $router->group([
     ], 
     function ($router) {
         $router->controller('/', 'Modules\Admin\Controllers\Dashboard');
+        $router->controller('clearcache', 'Modules\Admin\Controllers\ClearCache');
 });
 
 /*
