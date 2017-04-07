@@ -1,6 +1,6 @@
 <?php
 /**
- * Template functions
+ * Template smarty loader 
  *
  * @package phreak
  * @author Simeon Lyubenov <lyubenov@gmail.com>
