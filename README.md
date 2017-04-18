@@ -11,6 +11,7 @@
 #### Installation instructions
 `composer create-project webdevlabs/phreak`
 
+[![Build Status](https://travis-ci.org/webdevlabs/phreak.svg?branch=master)](https://travis-ci.org/webdevlabs/phreak)
 [![Join the chat at https://gitter.im/webdevlabs/Lobby](https://badges.gitter.im/webdevlabs/Lobby.svg)](https://gitter.im/webdevlabs/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Code Climate](https://codeclimate.com/github/webdevlabs/phreak/badges/gpa.svg)](https://codeclimate.com/github/webdevlabs/phreak)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45799a2694d74bc784c62a89d24c9b5a)](https://www.codacy.com/app/webdevlabs/phreak?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=webdevlabs/phreak&amp;utm_campaign=Badge_Grade)
