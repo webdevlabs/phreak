@@ -39,11 +39,11 @@ class Phroute
         // WITH PSR7 REQUEST/RESPONSE HANDLERS
         try {
             $_SESSION['requestURI']=$request->getUri()->getPath();
--            ob_start();
- -            $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
- -            $bufferedBody = ob_get_clean();
- -            $response->getBody()->write($bufferedBody);
-              $response = $response->withStatus(200);
+            ob_start();
+            $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
+            $bufferedBody = ob_get_clean();
+            $response->getBody()->write($bufferedBody);
+            $response = $response->withStatus(200);
         }
         catch (HttpRouteNotFoundException $e) {
                 return $response->withStatus(404);
