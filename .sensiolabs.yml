@@ -1,0 +1,20 @@
+php_version: 7
+
+global_exclude_dirs:
+    - vendor
+
+rules:
+    php.duplicated_code:
+        enabled: false
+    php.dynamically_change_configuration:
+        enabled: false
+    php.use_global_variable_or_function:
+        enabled: false
+    php.use_exit_function:
+        enabled: false
+    php.silenced_error:
+        enabled: false
+    php.commented_out_code:
+        enabled: false
+    php.unused_local_variable_or_private_member:
+        enabled: false
