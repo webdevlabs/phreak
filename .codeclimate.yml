@@ -1,0 +1,16 @@
+engines:
+  duplication:
+    enabled: true
+    checks:
+      Identical code:
+        enabled: false
+  phpmd:
+    enabled: true
+    checks:
+      Controversial/CamelCaseClassName:
+        enabled: false
+      Naming/ShortVariable:
+        enabled: false
+      CleanCode/StaticAccess:
+        enabled: false
+                        
