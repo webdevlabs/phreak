@@ -1,6 +1,6 @@
 <?php
 /**
- * Template smarty loader 
+ * Template functions
  *
  * @package phreak
  * @author Simeon Lyubenov <lyubenov@gmail.com>
@@ -23,9 +23,8 @@ class Template extends \Smarty {
 
     public function loadSystem () {
         $this->setCompileCheck(true); // set true to require smarty check if the template file is modified
-        $this->force_compile = false; // set true only for debugging purposes
+        $this->force_compile = true; // set true only for debugging purposes
 
-        // Set template variables
         $this->assign('requestURI',$_SESSION['requestURI']);
         $this->assign('language',$this->language->current);
         if ($this->language->default !== $this->language->current) {
@@ -34,7 +33,6 @@ class Template extends \Smarty {
             $baseurl = BASE_URL;
         }		
         $this->assign('baseurl',$baseurl);
-        $this->assign('conf',$this->conf);
 
         $this->setTemplateDir($this->conf->template['template_dir'])
         ->setCompileDir($this->conf->template['compile_dir'])
@@ -42,63 +40,16 @@ class Template extends \Smarty {
         ->setConfigDir($this->conf->template['languages_dir'])
         ->addPluginsDir($this->conf->template['plugins_dir']);
 
-        // register basic internal functions
-        $this->registerPlugin('function', "show_msg", array($this, 'show_msg'));
-        // if not logged in as admin
-        if (!$_SESSION['admin_id'] > "0") {
-            if ($this->conf->encode_output_emails == '1') {
-                $this->loadFilter('output', 'protect_email');
-            }
-        }
+        $this->applyCacheSettings();
 
-        $this->setSysCaching();
+        $this->loadFilter('output', 'trimwhitespace'); // enable smarty internal html minifier
 
+        // Set template variables
+        $this->assign('conf',$this->conf);
         // Go through config/template.php "assign" section and assign template values 
         if (count($this->conf->template['assign'])) {
             foreach ($this->conf->template['assign'] as $tkey => $tval) {
                 $this->assign($tkey, $tval);
-            }
-        }
-    }
-
-    public function setSysCaching () {
-        // if on frontend
-//		if (!$this->url->inAdmin) {
-        if ('tova_ne_e_vadmin'!=='da') {
-            if ($this->conf->combine_js) {
-                $this->loadFilter('output', 'combine_js');
-            }
-            if ($this->conf->combine_css) {
-                $this->loadFilter('output', 'combine_css');
-            }
-            // Cache settings
-            if ($this->conf->cache['smarty']['lifetime'] > 0) {
-                $this->setCacheLifetime($this->conf->cache['smarty']['lifetime']); // 1 hour
-            } else {
-                $this->setCacheLifetime(3600); // 1 hour
-            }
-            if ($this->conf->cache['smarty']['driver']=='files') {
-                $this->setCaching(true);
-                $this->setCompileCheck(false);
-            }
-            switch ($this->conf->caching_memory) {
-                case "opcache":
-                    ini_set('opcache.use_cwd', true); // Enable to prevent collisions between files with the same base name.
-                    ini_set('opcache.validate_timestamps', true);
-                    ini_set('opcache.revalidate_freq', $this->conf->cache_lifetime);
-                    break;
-                case "memcached":
-                    $this->setCachingType('memcache'); // Memcached Cache - /etc/default/memcached to enable sys daemon.
-                    break;
-                case "apc":
-                    $this->setCachingType('apc'); // APC Cache
-                    break;
-                default:
-                    ini_set('opcache.enable', 0);
-            }
-
-            if ($this->conf->minify_html_front == '1') {
-                $this->loadFilter('output', 'trimwhitespace'); // enable smarty internal html minifier
             }
         }
     }
@@ -143,4 +94,33 @@ class Template extends \Smarty {
         $this->assign('msg', $message);
     }
 
+    public function applyCacheSettings()
+    {
+            // Cache settings
+            if ($this->conf->template['cache_lifetime'] > 0) {
+                $this->setCacheLifetime($this->conf->template['cache_lifetime']);
+            } else {
+                $this->setCacheLifetime(3600); // 1 hour
+            }
+
+            if ($this->conf->template['caching']!==false) {
+                $this->setCaching(true);
+                $this->setCompileCheck(false);                
+            }
+            switch ($this->conf->template['caching']) {
+                case "redis":
+                    $this->setCachingType('redis'); // Redis
+                    break;
+                case "memcache":
+                    $this->setCachingType('memcache'); // Memcache Cache - /etc/default/memcached to enable sys daemon.
+                    break;
+                case "apc":
+                    $this->setCachingType('apc'); // APC Cache
+                    break;
+                default:
+                    $this->setCaching(false);
+                    $this->setCompileCheck(true);
+            }
+    }
+    // ---------- EOF CLASS.TEMPLATE.PHP
 }
