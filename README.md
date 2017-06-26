@@ -42,7 +42,7 @@ $router->controller('/', 'App\Controllers\Front');
 ```
 - GET request on http://host/login will call the App\Controllers\Front::getLogin() method.
 - POST request on http://host/login will call the App\Controllers\Front::postLogin() method.
-- GET request on http://host/read/someuri will call the App\Controllers\Front::getRead($uri) method with $uri parameter as an argument.
+- GET request on http://host/article/some-article-uri will call the App\Controllers\Front::getArticle($uri) method with $uri parameter as an argument.
 
 ### Advanced Routing
 
