@@ -1,3 +1,4 @@
+docs/*
 vendor/*
 config/*.php
 !config/base.php
