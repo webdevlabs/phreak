@@ -81,7 +81,7 @@ More advanced routings can be found at [Phroute's](https://github.com/mrjgreen/p
     }
 ```
 
-## Sample controller
+## Simple controller
 ```
 <?php
 
@@ -109,4 +109,4 @@ class Front
     }    
 }
 ```
-*More examples can be found in the 'app' directory.*
+*More advanced examples can be found in the 'modules' directory.*
