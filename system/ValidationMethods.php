@@ -66,4 +66,3 @@ trait ValidationMethods {
 		return (preg_match("#^[a-zA-ZA-y0-9_-]+$#", $input) == 1);
 	}
 }
-?>

@@ -35,13 +35,13 @@ class Validation
 	public function addRule($field, $errorMessage, $rules = array()) 
 	{
 		if (count($this->request) == 0) {
-			throw new Exception("The array of post parameters is empty");
+			throw new \Exception("The array of post parameters is empty");
 		}
 		if ($field == '') {
-			throw new Exception("field parameter is empty");
+			throw new \Exception("field parameter is empty");
 		}
-		if (!is_array($rules) or empty($rules)) {
-			throw new Exception("The array of rules parameter is empty");
+		if (!is_array($rules) || empty($rules)) {
+			throw new \Exception("The array of rules parameter is empty");
 		}
 		$errorMessage = ($errorMessage == '') ? $field : $errorMessage;
 		$this->fields[] = array(
@@ -76,10 +76,10 @@ class Validation
 	public function validate() 
 	{
 		if (count($this->request) == 0) {
-			throw new Exception("The array of post parameters is empty");
+			throw new \Exception("The array of post parameters is empty");
 		}
 		if (count($this->fields) == 0) {
-			throw new Exception("Validation rules is not set");
+			throw new \Exception("Validation rules is not set");
 		}
 		foreach ($this->fields as $field) {
 			$fieldName = $field['name'];
@@ -106,7 +106,7 @@ class Validation
 			$output = call_user_func($rule['callback']);
 			if ($output !== true && $rule['name'] !== '') {
 				// if empty errorMessage, then get errors array from callback output
-				if ($rule['name'] == $rule['errorMessage'] and is_array($output)) {
+				if ($rule['name'] == $rule['errorMessage'] && is_array($output)) {
 					//								$errnum='0';
 					foreach ($output as $rulekey => $errmsg) {
 						//									$errnum++;
