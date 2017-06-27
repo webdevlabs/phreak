@@ -94,7 +94,7 @@ class Validation
 						}
 					}
 					$output = $this->$rule($this->request[$fieldName], $param);
-					if (($required and $output === false) or ($required and !isset($this->request[$fieldName])) or (!$required and $output === false and !empty($this->request[$fieldName]))) {
+					if (($required && $output === false) || ($required && !isset($this->request[$fieldName])) || (!$required && $output === false && !empty($this->request[$fieldName]))) {
 						$this->errors[$fieldName] = $field['errorMessage'];
 					}
 				}
