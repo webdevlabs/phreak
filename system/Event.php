@@ -23,7 +23,7 @@ class Event {
 	 *
 	 * @return stdClass
 	 */
-	function events() {
+	public function events() {
 		static $events;
 		return $events ? : $events = new \stdClass();
 	}
@@ -34,7 +34,7 @@ class Event {
 	 * @param $event
 	 * @return mixed
 	 */
-	function listeners($event) {
+	public function listeners($event) {
 		if (isset($this->events()->$event)) {
 			ksort($this->events()->$event);
 			return call_user_func_array('array_merge', $this->events()->$event);
@@ -48,7 +48,7 @@ class Event {
 	 * @param callable $listener
 	 * @param int $priority
 	 */
-	function bind($event, callable $listener = null, $priority = 10) {
+	public function bind($event, callable $listener = null, $priority = 10) {
 		$this->events()->{$event}[$priority][] = $listener;
 	}
 
@@ -59,7 +59,7 @@ class Event {
 	 * @param callable $listener
 	 * @param int $priority
 	 */
-	function bindOnce($event, callable $listener, $priority = 10) {
+	public function bindOnce($event, callable $listener, $priority = 10) {
 		$once = function ()use(&$once, $event, $listener) {
 			$this->unbind($event, $once);
 			return call_user_func_array($listener, func_get_args());
@@ -76,7 +76,7 @@ class Event {
 	 * @param callable $listener
 	 * @return bool
 	 */
-	function unbind($event, callable $listener = null) {
+	public function unbind($event, callable $listener = null) {
 		if (!isset($this->events()->$event))
 			return;
 
@@ -100,7 +100,7 @@ class Event {
 	 * @param array $args
 	 * @return array
 	 */
-	function trigger($events, $args = array()) {
+	public function trigger($events, $args = array()) {
 		$out = [];
 		foreach ((array )$events as $event) {
 			foreach ((array )$this->listeners($event) as $listener) {
@@ -121,7 +121,7 @@ class Event {
 	 * @return mixed|null
 	 * @internal param null $value
 	 */
-	function filter($events, $value = null, $args = array()) {
+	public function filter($events, $value = null, $args = array()) {
 		array_unshift($args, $value);
 		foreach ((array )$events as $event) {
 			foreach ((array )$this->listeners($event) as $listener) {
@@ -136,7 +136,7 @@ class Event {
 	 * @param callable $listener
 	 * @param int $priority
 	 */
-	function addFilter($event, callable $listener, $priority = 10) {
+	public function addFilter($event, callable $listener, $priority = 10) {
 		$this->bind($event, $listener, $priority);
 	}
 
@@ -147,7 +147,7 @@ class Event {
 	 * @param callable $listener
 	 * @return mixed
 	 */
-	function ensure($event, callable $listener = null) {
+	public function ensure($event, callable $listener = null) {
 		if ($listener)
 			$this->bind($event, $listener, 0); // register default listener
 
