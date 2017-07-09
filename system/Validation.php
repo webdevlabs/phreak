@@ -12,7 +12,7 @@ namespace System;
 
 class Validation 
 {
-	use ValidationMethods;
+	use \System\ValidationMethods;
 	protected $fields = array();
 	protected $customrules = array();
 	private $errors = array();
