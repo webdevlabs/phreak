@@ -110,3 +110,18 @@ class Front
 }
 ```
 *More advanced examples can be found in the 'modules' directory.*
+
+## Events
+```
+use System\Event;
+class ... {
+    public function __construct (Event $event) 
+    {
+        $this->event = $event;
+        $this->event->on('someEventName', function () { echo "stay foolish"; });
+    }
+    public function getSome () {
+        $this->event->trigger('someEventName');
+    }
+}
+```
