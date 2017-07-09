@@ -59,7 +59,7 @@ class Event {
 	 * @param callable $listener
 	 * @param int $priority
 	 */
-	function bind_once($event, callable $listener, $priority = 10) {
+	function bindOnce($event, callable $listener, $priority = 10) {
 		$once = function ()use(&$once, $event, $listener) {
 			$this->unbind($event, $once);
 			return call_user_func_array($listener, func_get_args());
@@ -136,7 +136,7 @@ class Event {
 	 * @param callable $listener
 	 * @param int $priority
 	 */
-	function add_filter($event, callable $listener, $priority = 10) {
+	function addFilter($event, callable $listener, $priority = 10) {
 		$this->bind($event, $listener, $priority);
 	}
 
