@@ -9,8 +9,8 @@
  * @copyright Copyright (c) 2016 Simeon Lyubenov. All rights reserved.
  * 
  * @usage (with prioritization):
- * $this->event->on('eventName', function () { echo " stay hungry"; }, 200);
- * $this->event->on('eventName', function () { echo "stay foolish"; }, 100);
+ * $this->event->bind('eventName', function () { echo " stay hungry"; }, 200);
+ * $this->event->bind('eventName', function () { echo "stay foolish"; }, 100);
  * $this->event->trigger('eventName'); // print "stay foolish stay hungry"
  */
 
