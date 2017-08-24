@@ -118,7 +118,7 @@ class ... {
     public function __construct (Event $event) 
     {
         $this->event = $event;
-        $this->event->on('someEventName', function () { echo "stay foolish"; });
+        $this->event->bind('someEventName', function () { echo "stay foolish"; });
     }
     public function getSome () {
         $this->event->trigger('someEventName');
