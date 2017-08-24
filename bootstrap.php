@@ -70,7 +70,7 @@ $language=$container->get('System\Language');
  */
 $response = new Zend\Diactoros\Response();
 $response = $response
-    ->withHeader('Content-Type', 'text/html')
+//    ->withHeader('Content-Type', 'text/html')
     ->withAddedHeader('X-Phreak-KEY', $config->system['site_key'])
     ->withHeader('Cache-Control', 'private, max-age=3600, must-revalidate');
 $request = Zend\Diactoros\ServerRequestFactory::fromGlobals();

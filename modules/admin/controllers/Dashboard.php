@@ -22,4 +22,10 @@ class Dashboard {
         $this->template->display('layout.tpl');
     }    
 
+   public function getVue() {
+    $this->template->setTemplateDir(ROOT_DIR.'/modules/admin/views/');
+    $this->template->left_delimiter = "{!"; 
+    $this->template->right_delimiter = "!}";         
+    $this->template->display('vue.tpl');
+    }    
 }
