@@ -39,16 +39,16 @@
         },
         {
             "name": "oscarotero/psr7-middlewares",
-            "version": "v3.20.0",
+            "version": "v3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oscarotero/psr7-middlewares.git",
-                "reference": "34af332804e03703dc28f009a7b2c6a35268b81f"
+                "reference": "f173bc29f51252d6015fc326cf940d5e4679226a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/psr7-middlewares/zipball/34af332804e03703dc28f009a7b2c6a35268b81f",
-                "reference": "34af332804e03703dc28f009a7b2c6a35268b81f",
+                "url": "https://api.github.com/repos/oscarotero/psr7-middlewares/zipball/f173bc29f51252d6015fc326cf940d5e4679226a",
+                "reference": "f173bc29f51252d6015fc326cf940d5e4679226a",
                 "shasum": ""
             },
             "require": {
@@ -132,7 +132,7 @@
                 "psr-7",
                 "psr-messages"
             ],
-            "time": "2017-03-23T18:11:12+00:00"
+            "time": "2017-08-22T06:04:24+00:00"
         },
         {
             "name": "php-di/invoker",
