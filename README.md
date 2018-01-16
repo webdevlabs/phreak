@@ -1,6 +1,5 @@
 # Phreak!
 [![Build Status](https://travis-ci.org/webdevlabs/phreak.svg?branch=master)](https://travis-ci.org/webdevlabs/phreak)
-[![Code Climate](https://codeclimate.com/github/webdevlabs/phreak/badges/gpa.svg)](https://codeclimate.com/github/webdevlabs/phreak)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45799a2694d74bc784c62a89d24c9b5a)](https://www.codacy.com/app/webdevlabs/phreak?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=webdevlabs/phreak&amp;utm_campaign=Badge_Grade)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3/mini.png)](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3)
 [![Dependency Status](https://www.versioneye.com/user/projects/58f730d9710da2004fad45d7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58f730d9710da2004fad45d7)
