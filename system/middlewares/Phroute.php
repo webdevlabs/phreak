@@ -40,7 +40,7 @@ class Phroute
         try {
             $_SESSION['requestURI']=$request->getUri()->getPath();
             ob_start();
-             $route = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
+             $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
              $bufferedBody = ob_get_clean();
              $response->getBody()->write($bufferedBody);
              $response = $response->withStatus(200);
