@@ -17,8 +17,28 @@
 function lang ($value) {
   $grp=before('.',$value);
   $val=after('.',$value);
-  return \System\lang::$lang_vars[$grp][$val];
+  return \System\Language::$lang_vars[$grp][$val];
 }
+
+	/**
+	 * Send Redirect request to browser
+	 *
+	 * @param string $url
+	 * @return mixed
+	 */
+ function redirect($url, $type = 'header') {
+		if (!headers_sent() and $type == 'header') {
+			header('Location: '.$url);
+      flush();
+		} else {
+			echo '<script type="text/javascript">';
+			echo 'window.location.href="'.$url.'";';
+			echo '</script>';
+			echo '<noscript>';
+			echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+			echo '</noscript>';
+		}
+	}
 
 /**
  * Convert size format to bytes

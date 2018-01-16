@@ -45,6 +45,9 @@ class LanguageDetect
                 //remove the language in the path
                 $request = $request->withUri($uri->withPath('/'.array_shift($dirs)));
                 $this->language->current = $language;
+            }else {
+                $this->language->current = $this->language->default;
+                $this->language->notOrigin = true;
             }
         return $next($request, $response);
     }

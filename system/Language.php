@@ -8,8 +8,7 @@ class Language {
     public function __construct (Config $conf) {
         $this->conf = $conf;
         $this->default = 'en';
-        $this->current = $this->default;
-//        print_r(DB::fetch('SELECT * from `languages`'));
+        //$this->current = $this->default; // moved to middleware
     }
     
 }

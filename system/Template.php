@@ -26,22 +26,15 @@ class Template extends \Smarty {
         $this->force_compile = true; // set true only for debugging purposes
 
         $this->assign('requestURI',$_SESSION['requestURI']);
-        $this->assign('language',$this->language->current);
-        if ($this->language->default !== $this->language->current) {
-            $baseurl = BASE_URL.'/'.$this->language->current;
-        }else {
-            $baseurl = BASE_URL;
-        }		
-        $this->assign('baseurl',$baseurl);
 
         $this->setTemplateDir($this->conf->template['template_dir'])
         ->setCompileDir($this->conf->template['compile_dir'])
         ->setCacheDir($this->conf->template['cache_dir'])
         ->setConfigDir($this->conf->template['languages_dir'])
         ->addPluginsDir($this->conf->template['plugins_dir']);
-
         $this->applyCacheSettings();
-
+        $this->assignLanguage();
+        
         $this->loadFilter('output', 'trimwhitespace'); // enable smarty internal html minifier
 
         // Set template variables
@@ -54,6 +47,22 @@ class Template extends \Smarty {
         }
     }
 
+    public function assignLanguage()
+    {
+        $this->assign('language',$this->language->current);
+        $this->assign('defaultLang',$this->language->default);
+        if ($this->language->default !== $this->language->current) {
+            $baseurl = BASE_URL.'/'.$this->language->current;
+        }else {
+            $baseurl = BASE_URL;
+        }		
+        $this->assign('baseurl',$baseurl);
+        $langfile = ROOT_DIR.'/storage/languages/'.$this->language->current.'.ini';
+        if (is_file($langfile)) {
+            $this->configLoad($langfile);
+            $this->language->vars = parse_ini_file($langfile);		    
+        }
+    }
     /**
      * Override Smarty's built-in 'display' function
      *
