@@ -2,7 +2,7 @@
     "name": "webdevlabs/phreak",
     "type": "project",
     "description": "Phreak! the ultimate development tool for lamez :)",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "keywords": ["php", "hmvc", "phreak", "framework"],
     "homepage": "https://www.webdevlabs.com",
     "license": "MIT",
