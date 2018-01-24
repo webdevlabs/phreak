@@ -4,9 +4,8 @@
  * APC CacheResource
  * CacheResource Implementation based on the KeyValueStore API to use
  * memcache as the storage resource for Smarty's output caching.
- * *
+ * *.
  *
- * @package CacheResource-examples
  * @author  Uwe Tews
  */
 class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
@@ -20,31 +19,31 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
     }
 
     /**
-     * Read values for a set of keys from cache
+     * Read values for a set of keys from cache.
      *
-     * @param  array $keys list of keys to fetch
+     * @param array $keys list of keys to fetch
      *
-     * @return array   list of values with the given keys used as indexes
-     * @return boolean true on success, false on failure
+     * @return array list of values with the given keys used as indexes
+     * @return bool  true on success, false on failure
      */
     protected function read(array $keys)
     {
-        $_res = array();
+        $_res = [];
         $res = apc_fetch($keys);
         foreach ($res as $k => $v) {
-            $_res[ $k ] = $v;
+            $_res[$k] = $v;
         }
 
         return $_res;
     }
 
     /**
-     * Save values for a set of keys to cache
+     * Save values for a set of keys to cache.
      *
-     * @param  array $keys   list of values to save
-     * @param  int   $expire expiration time
+     * @param array $keys   list of values to save
+     * @param int   $expire expiration time
      *
-     * @return boolean true on success, false on failure
+     * @return bool true on success, false on failure
      */
     protected function write(array $keys, $expire = null)
     {
@@ -56,11 +55,11 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
     }
 
     /**
-     * Remove values from cache
+     * Remove values from cache.
      *
-     * @param  array $keys list of keys to delete
+     * @param array $keys list of keys to delete
      *
-     * @return boolean true on success, false on failure
+     * @return bool true on success, false on failure
      */
     protected function delete(array $keys)
     {
@@ -72,9 +71,9 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
     }
 
     /**
-     * Remove *all* values from cache
+     * Remove *all* values from cache.
      *
-     * @return boolean true on success, false on failure
+     * @return bool true on success, false on failure
      */
     protected function purge()
     {

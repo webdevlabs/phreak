@@ -1,4 +1,5 @@
 <?php
+
 // backward compatibility
 if (!class_exists('\PHPUnit\Framework\TestCase') &&
     class_exists('\PHPUnit_Framework_TestCase')) {
@@ -7,7 +8,8 @@ if (!class_exists('\PHPUnit\Framework\TestCase') &&
 
 class Test extends \PHPUnit\Framework\TestCase
 {
-	public function testOnePlusOne() {
-		$this->assertEquals(1+1,2);
-  	}
+    public function testOnePlusOne()
+    {
+        $this->assertEquals(1 + 1, 2);
+    }
 }

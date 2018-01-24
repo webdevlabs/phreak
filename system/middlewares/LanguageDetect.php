@@ -2,9 +2,9 @@
 
 namespace System\Middlewares;
 
-use \Psr\Http\Message\ServerRequestInterface;
-use \Psr\Http\Message\ResponseInterface;
-use \System\Language;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use System\Language;
 
 /**
  * Middleware to calculate the response time duration.
@@ -36,19 +36,20 @@ class LanguageDetect
     {
         $language = null;
         $uri = $request->getUri();
-            $path = ltrim($uri->getPath(), '/');
-            $dirs = explode('/', $path, 2);
-            $first = strtolower(array_shift($dirs));
+        $path = ltrim($uri->getPath(), '/');
+        $dirs = explode('/', $path, 2);
+        $first = strtolower(array_shift($dirs));
 
-            if (!empty($first) && in_array($first, $this->language->available_languages, true)) {
-                $language = $first;
-                //remove the language in the path
-                $request = $request->withUri($uri->withPath('/'.array_shift($dirs)));
-                $this->language->current = $language;
-            }else {
-                $this->language->current = $this->language->default;
-                $this->language->notOrigin = true;
-            }
+        if (!empty($first) && in_array($first, $this->language->available_languages, true)) {
+            $language = $first;
+            //remove the language in the path
+            $request = $request->withUri($uri->withPath('/'.array_shift($dirs)));
+            $this->language->current = $language;
+        } else {
+            $this->language->current = $this->language->default;
+            $this->language->notOrigin = true;
+        }
+
         return $next($request, $response);
     }
 }

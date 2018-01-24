@@ -1,17 +1,16 @@
 <?php
 /**
- * Phreak! - the ultimate development tool for lamez
- * 
+ * Phreak! - the ultimate development tool for lamez.
+ *
  * ultralight fast PHP HMVC framework
- * 
- * @package phreak
+ *
  * @author Simeon Lyubenov <lyubenov@gmail.com>
+ *
  * @link http://www.lamez.org
  * @link https://www.webdevlabs.com
- * 
+ *
  * This file as an exact copy from the Laravel framework.
  */
-
 $uri = urldecode(
     parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
 );

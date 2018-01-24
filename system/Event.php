@@ -1,13 +1,14 @@
 <?php
 /**
  * System Events
- * Based on https://github.com/sphido/events
+ * Based on https://github.com/sphido/events.
  *
- * @package phreak
  * @author Simeon Lyubenov (ShakE) <lyubenov@gmail.com>
+ *
  * @link https://www.webdevlabs.com
+ *
  * @copyright Copyright (c) 2016 Simeon Lyubenov. All rights reserved.
- * 
+ *
  * @usage (with prioritization):
  * $this->event->bind('eventName', function () { echo " stay hungry"; }, 200);
  * $this->event->bind('eventName', function () { echo "stay foolish"; }, 100);
@@ -16,144 +17,164 @@
 
 namespace System;
 
-class Event {
+class Event
+{
+    /**
+     * Return events object.
+     *
+     * @return stdClass
+     */
+    public function events()
+    {
+        static $events;
 
-	/**
-	 * Return events object
-	 *
-	 * @return stdClass
-	 */
-	public function events() {
-		static $events;
-		return $events ? : $events = new \stdClass();
-	}
+        return $events ?: $events = new \stdClass();
+    }
 
-	/**
-	 * Return listeners
-	 *
-	 * @param $event
-	 * @return mixed
-	 */
-	public function listeners($event) {
-		if (isset($this->events()->$event)) {
-			ksort($this->events()->$event);
-			return call_user_func_array('array_merge', $this->events()->$event);
-		}
-	}
+    /**
+     * Return listeners.
+     *
+     * @param $event
+     *
+     * @return mixed
+     */
+    public function listeners($event)
+    {
+        if (isset($this->events()->$event)) {
+            ksort($this->events()->$event);
 
-	/**
-	 * Add event listener
-	 *
-	 * @param $event event name
-	 * @param callable $listener
-	 * @param int $priority
-	 */
-	public function bind($event, callable $listener = null, $priority = 10) {
-		$this->events()->{$event}[$priority][] = $listener;
-	}
+            return call_user_func_array('array_merge', $this->events()->$event);
+        }
+    }
 
-	/**
-	 * Trigger only once.
-	 *
-	 * @param $event
-	 * @param callable $listener
-	 * @param int $priority
-	 */
-	public function bindOnce($event, callable $listener, $priority = 10) {
-		$once = function ()use(&$once, $event, $listener) {
-			$this->unbind($event, $once);
-			return call_user_func_array($listener, func_get_args());
-		}
-		;
+    /**
+     * Add event listener.
+     *
+     * @param $event event name
+     * @param callable $listener
+     * @param int      $priority
+     */
+    public function bind($event, callable $listener = null, $priority = 10)
+    {
+        $this->events()->{$event}[$priority][] = $listener;
+    }
 
-		$this->bind($event, $once, $priority);
-	}
+    /**
+     * Trigger only once.
+     *
+     * @param $event
+     * @param callable $listener
+     * @param int      $priority
+     */
+    public function bindOnce($event, callable $listener, $priority = 10)
+    {
+        $once = function () use (&$once, $event, $listener) {
+            $this->unbind($event, $once);
 
-	/**
-	 * Remove one or all listeners from event.
-	 *
-	 * @param $event
-	 * @param callable $listener
-	 * @return bool
-	 */
-	public function unbind($event, callable $listener = null) {
-		if (!isset($this->events()->$event))
-			return;
+            return call_user_func_array($listener, func_get_args());
+        };
 
-		if ($listener === null) {
-			unset($this->events()->$event);
-		} else {
-			foreach ($this->events()->$event as $priority => $listeners) {
-				if (false !== ($index = array_search($listener, $listeners, true))) {
-					unset($this->events()->{$event}[$priority][$index]);
-				}
-			}
-		}
+        $this->bind($event, $once, $priority);
+    }
 
-		return true;
-	}
+    /**
+     * Remove one or all listeners from event.
+     *
+     * @param $event
+     * @param callable $listener
+     *
+     * @return bool
+     */
+    public function unbind($event, callable $listener = null)
+    {
+        if (!isset($this->events()->$event)) {
+            return;
+        }
 
-	/**
-	 * Trigger events
-	 *
-	 * @param string|array $events
-	 * @param array $args
-	 * @return array
-	 */
-	public function trigger($events, $args = array()) {
-		$out = [];
-		foreach ((array )$events as $event) {
-			foreach ((array )$this->listeners($event) as $listener) {
-				if (($out[] = call_user_func_array($listener, $args)) === false)
-					break; // return false ==> stop propagation
-			}
-		}
+        if ($listener === null) {
+            unset($this->events()->$event);
+        } else {
+            foreach ($this->events()->$event as $priority => $listeners) {
+                if (false !== ($index = array_search($listener, $listeners, true))) {
+                    unset($this->events()->{$event}[$priority][$index]);
+                }
+            }
+        }
 
-		return $out;
-	}
+        return true;
+    }
 
-	/**
-	 * Pass variable with all filters.
-	 *
-	 * @param string|array $events
-	 * @param null $value
-	 * @param array $args
-	 * @return mixed|null
-	 * @internal param null $value
-	 */
-	public function filter($events, $value = null, $args = array()) {
-		array_unshift($args, $value);
-		foreach ((array )$events as $event) {
-			foreach ((array )$this->listeners($event) as $listener) {
-				$args[0] = $value = call_user_func_array($listener, $args);
-			}
-		}
-		return $value;
-	}
+    /**
+     * Trigger events.
+     *
+     * @param string|array $events
+     * @param array        $args
+     *
+     * @return array
+     */
+    public function trigger($events, $args = [])
+    {
+        $out = [];
+        foreach ((array) $events as $event) {
+            foreach ((array) $this->listeners($event) as $listener) {
+                if (($out[] = call_user_func_array($listener, $args)) === false) {
+                    break;
+                } // return false ==> stop propagation
+            }
+        }
 
-	/**
-	 * @param $event
-	 * @param callable $listener
-	 * @param int $priority
-	 */
-	public function addFilter($event, callable $listener, $priority = 10) {
-		$this->bind($event, $listener, $priority);
-	}
+        return $out;
+    }
 
-	/**
-	 * Ensure that something will be handled
-	 *
-	 * @param string $event
-	 * @param callable $listener
-	 * @return mixed
-	 */
-	public function ensure($event, callable $listener = null) {
-		if ($listener)
-			$this->bind($event, $listener, 0); // register default listener
+    /**
+     * Pass variable with all filters.
+     *
+     * @param string|array $events
+     * @param null         $value
+     * @param array        $args
+     *
+     * @return mixed|null
+     *
+     * @internal param null $value
+     */
+    public function filter($events, $value = null, $args = [])
+    {
+        array_unshift($args, $value);
+        foreach ((array) $events as $event) {
+            foreach ((array) $this->listeners($event) as $listener) {
+                $args[0] = $value = call_user_func_array($listener, $args);
+            }
+        }
 
-		if ($listeners = $this->listeners($event)) {
-			return call_user_func_array(end($listeners), array_slice(func_get_args(), 2));
-		}
-	}
+        return $value;
+    }
 
+    /**
+     * @param $event
+     * @param callable $listener
+     * @param int      $priority
+     */
+    public function addFilter($event, callable $listener, $priority = 10)
+    {
+        $this->bind($event, $listener, $priority);
+    }
+
+    /**
+     * Ensure that something will be handled.
+     *
+     * @param string   $event
+     * @param callable $listener
+     *
+     * @return mixed
+     */
+    public function ensure($event, callable $listener = null)
+    {
+        if ($listener) {
+            $this->bind($event, $listener, 0);
+        } // register default listener
+
+        if ($listeners = $this->listeners($event)) {
+            return call_user_func_array(end($listeners), array_slice(func_get_args(), 2));
+        }
+    }
 }

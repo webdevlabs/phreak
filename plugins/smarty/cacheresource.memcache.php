@@ -7,13 +7,12 @@
  * Note that memcache has a limitation of 256 characters per cache-key.
  * To avoid complications all cache-keys are translated to a sha1 hash.
  *
- * @package CacheResource-examples
  * @author  Rodney Rehm
  */
 class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore
 {
     /**
-     * memcache instance
+     * memcache instance.
      *
      * @var Memcache
      */
@@ -30,37 +29,37 @@ class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore
     }
 
     /**
-     * Read values for a set of keys from cache
+     * Read values for a set of keys from cache.
      *
-     * @param  array $keys list of keys to fetch
+     * @param array $keys list of keys to fetch
      *
-     * @return array   list of values with the given keys used as indexes
-     * @return boolean true on success, false on failure
+     * @return array list of values with the given keys used as indexes
+     * @return bool  true on success, false on failure
      */
     protected function read(array $keys)
     {
-        $_keys = $lookup = array();
+        $_keys = $lookup = [];
         foreach ($keys as $k) {
             $_k = sha1($k);
             $_keys[] = $_k;
-            $lookup[ $_k ] = $k;
+            $lookup[$_k] = $k;
         }
-        $_res = array();
+        $_res = [];
         $res = $this->memcache->get($_keys);
         foreach ($res as $k => $v) {
-            $_res[ $lookup[ $k ] ] = $v;
+            $_res[$lookup[$k]] = $v;
         }
 
         return $_res;
     }
 
     /**
-     * Save values for a set of keys to cache
+     * Save values for a set of keys to cache.
      *
-     * @param  array $keys   list of values to save
-     * @param  int   $expire expiration time
+     * @param array $keys   list of values to save
+     * @param int   $expire expiration time
      *
-     * @return boolean true on success, false on failure
+     * @return bool true on success, false on failure
      */
     protected function write(array $keys, $expire = null)
     {
@@ -73,11 +72,11 @@ class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore
     }
 
     /**
-     * Remove values from cache
+     * Remove values from cache.
      *
-     * @param  array $keys list of keys to delete
+     * @param array $keys list of keys to delete
      *
-     * @return boolean true on success, false on failure
+     * @return bool true on success, false on failure
      */
     protected function delete(array $keys)
     {
@@ -90,9 +89,9 @@ class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore
     }
 
     /**
-     * Remove *all* values from cache
+     * Remove *all* values from cache.
      *
-     * @return boolean true on success, false on failure
+     * @return bool true on success, false on failure
      */
     protected function purge()
     {
