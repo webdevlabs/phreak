@@ -1,9 +1,10 @@
 <?php
 /**
- * Custom Router Resolver using PHP-DI Container 
- * 
+ * Custom Router Resolver using PHP-DI Container.
  */
+
 namespace System;
+
 use DI\Container;
 use Phroute\Phroute\HandlerResolverInterface;
 
@@ -23,8 +24,7 @@ class RouterResolver implements HandlerResolverInterface
          *
          *      $handler = ['App\Controllers\Home', 'method'];
          */
-        if(is_array($handler) && is_string($handler[0]))
-        {
+        if (is_array($handler) && is_string($handler[0])) {
             $handler[0] = $this->container->get($handler[0]);
         }
 

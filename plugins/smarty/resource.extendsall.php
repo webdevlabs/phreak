@@ -3,41 +3,40 @@
 /**
  * Extends All Resource
  * Resource Implementation modifying the extends-Resource to walk
- * through the template_dirs and inherit all templates of the same name
+ * through the template_dirs and inherit all templates of the same name.
  *
- * @package Resource-examples
  * @author  Rodney Rehm
  */
 class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
 {
     /**
-     * populate Source Object with meta data from Resource
+     * populate Source Object with meta data from Resource.
      *
-     * @param  Smarty_Template_Source   $source    source object
-     * @param  Smarty_Internal_Template $_template template object
+     * @param Smarty_Template_Source   $source    source object
+     * @param Smarty_Internal_Template $_template template object
      *
      * @return void
      */
     public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null)
     {
         $uid = '';
-        $sources = array();
+        $sources = [];
         $timestamp = 0;
         foreach ($source->smarty->getTemplateDir() as $key => $directory) {
             try {
-                $s = Smarty_Resource::source(null, $source->smarty, 'file:' . '[' . $key . ']' . $source->name);
+                $s = Smarty_Resource::source(null, $source->smarty, 'file:'.'['.$key.']'.$source->name);
                 if (!$s->exists) {
                     continue;
                 }
-                $sources[ $s->uid ] = $s;
+                $sources[$s->uid] = $s;
                 $uid .= $s->filepath;
                 $timestamp = $s->timestamp > $timestamp ? $s->timestamp : $timestamp;
-            }
-            catch (SmartyException $e) {
+            } catch (SmartyException $e) {
             }
         }
         if (!$sources) {
             $source->exists = false;
+
             return;
         }
 
@@ -46,7 +45,7 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
         $s = current($sources);
         $source->components = $sources;
         $source->filepath = $s->filepath;
-        $source->uid = sha1($uid . $source->smarty->_joined_template_dir);
+        $source->uid = sha1($uid.$source->smarty->_joined_template_dir);
         $source->exists = true;
         $source->timestamp = $timestamp;
     }
@@ -61,5 +60,4 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
     {
         return false;
     }
-
 }

@@ -1,10 +1,10 @@
 <?php
 /**
- * DEFAULT ROUTES
+ * DEFAULT ROUTES.
  */
 
 // Add default homepage route
-$router->get('/', ['App\HomeController','showIndex']);
+$router->get('/', ['App\HomeController', 'showIndex']);
 
 /*
 $router->get('/gz', function() use ($template) {

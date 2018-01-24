@@ -1,23 +1,27 @@
 <?php
+
 namespace App;
+
 use System\Template;
 
-class HomeController {
+class HomeController
+{
     private $template;
-    public function __construct (Template $template) {
+
+    public function __construct(Template $template)
+    {
         $this->template = $template;
     }
 
-   public function showIndex()
+    public function showIndex()
     {
-        $msg='Welcome';
-        $title="webdevlabs";
+        $msg = 'Welcome';
+        $title = 'webdevlabs';
 
         $this->template->assign([
-            'page_title'=>$title,
-            'page_content'=>$msg
+            'page_title'  => $title,
+            'page_content'=> $msg,
         ]);
         $this->template->display('layout.tpl');
-    }    
-
+    }
 }
