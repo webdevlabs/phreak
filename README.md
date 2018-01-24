@@ -3,6 +3,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45799a2694d74bc784c62a89d24c9b5a)](https://www.codacy.com/app/webdevlabs/phreak?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=webdevlabs/phreak&amp;utm_campaign=Badge_Grade)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3/mini.png)](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3)
 [![Dependency Status](https://www.versioneye.com/user/projects/58f730d9710da2004fad45d7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58f730d9710da2004fad45d7)
+[![StyleCI](https://styleci.io/repos/86944823/shield?branch=master)](https://styleci.io/repos/86944823)
+
 ### ultra-light fast php framework powered by:
 - [Phroute](https://github.com/mrjgreen/phroute) (url routing)
 - [PHP-DI](https://github.com/PHP-DI/PHP-DI) (dependency injection container)
