@@ -1,6 +1,6 @@
 docs/*
 vendor/*
-config/*.php
+config/*
 !config/base.php
 storage/cache/smarty/*
 storage/cache/stash/*
