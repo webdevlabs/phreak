@@ -7,15 +7,6 @@ class Smarty_Resource_Email extends Smarty_Resource_Custom
     // prepared fetchTimestamp() statement
     protected $mtime;
 
-    /**
-     * Fetch a template and its modification time from database.
-     *
-     * @param string $name template name
-     * @param string $source template source
-     * @param int $mtime template modification timestamp (epoch)
-     *
-     * @return void
-     */
     protected function fetch($name, &$source, &$mtime)
     {
         $tpl_field = before('/', $name);
