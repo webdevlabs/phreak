@@ -2,25 +2,11 @@
 
 namespace Modules\Eloq\Controllers;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use Modules\Eloq\Models\User as User;
+use Illuminate\Database\Eloquent\ModelNotFoundException as NotFoundException;
 
 class UserController {
     
-    public function getCreatetable ()
-    {
-        Capsule::schema()->create('users', function ($table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('userimage')->nullable();
-            $table->string('api_key')->nullable()->unique();
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
-
     public function getCreate ($email)
     {
         $user = User::Create([
@@ -33,7 +19,13 @@ class UserController {
 
     public function getShow($email)
     {
-        $user = User::where('email',$email)->first();
+        try {
+            $user = User::where('email',$email)->firstOrFail();
+        }
+        catch (NotFoundException $err) {
+            echo 'Email not found';
+            return;
+        }
         print_r($user->toArray());
     }
 
@@ -44,6 +36,6 @@ class UserController {
             'email' => "kshitij206@gmail.com", 
             'password' => password_hash("1234",PASSWORD_BCRYPT)
             ]);
-
     }
+    
 }
