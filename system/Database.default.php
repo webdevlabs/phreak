@@ -3,7 +3,6 @@
 namespace System;
 
 use DI\Container;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Database
 {
@@ -13,26 +12,7 @@ class Database
         $this->log = $container->get('System\Logger');
     }
 
-    public function connect(Type $var = null)
-    {
-        $capsule = new Capsule;
-        $capsule->addConnection([
-           "driver" => "mysql",
-           "host" =>$this->conf->database['mysql']['host'],
-           "database" => $this->conf->database['mysql']['dbname'],
-           "username" => $this->conf->database['mysql']['username'],
-           "password" => $this->conf->database['mysql']['password']
-        ]);
-        
-        //Make this Capsule instance available globally.
-        $capsule->setAsGlobal();
-        
-        // Setup the Eloquent ORM.
-        $capsule->bootEloquent();
-        $capsule->bootEloquent();            
-    }
-
-    public function connect_with_PDO()
+    public function connect()
     {
         if ($this->conf->database) {
             /* Create a new PDO connection to MySQL **/
