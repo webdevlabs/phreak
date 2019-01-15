@@ -12,6 +12,27 @@ class TableController {
         $this->createTodos();
     }
 
+    public function getCreatearticles()
+    {
+        Capsule::schema()->create('articles', function ($table) {
+            $table->increments('id');
+            $table->boolean('online');
+            $table->timestamps();
+        });
+        
+        Capsule::schema()->create('article_translations', function ($table) {
+            $table->increments('id');
+            $table->integer('article_id')->unsigned();
+            $table->string('locale')->index();
+        
+            $table->string('name');
+            $table->text('text');
+        
+            $table->unique(['article_id','locale']);
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+        });        
+    }
+
     public function createUsers ()
     {
         Capsule::schema()->create('users', function ($table) {
