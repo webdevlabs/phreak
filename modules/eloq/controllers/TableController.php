@@ -12,6 +12,28 @@ class TableController {
         $this->createTodos();
     }
 
+    public function getCreatecountries()
+    {
+        Capsule::schema()->create('countries', function($table)
+        {
+            $table->increments('id');
+            $table->string('code');
+            $table->timestamps();
+        });
+        
+        Capsule::schema()->create('country_translations', function($table)
+        {
+            $table->increments('id');
+            $table->integer('country_id')->unsigned();
+            $table->string('name');
+            $table->string('locale')->index();
+        
+            $table->unique(['country_id','locale']);
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+        });        
+        echo 'success';
+    }
+
     public function getCreatearticles()
     {
         Capsule::schema()->create('articles', function ($table) {
@@ -21,7 +43,7 @@ class TableController {
         });
         
         Capsule::schema()->create('article_translations', function ($table) {
-            $table->increments('id');
+//            $table->increments('id');
             $table->integer('article_id')->unsigned();
             $table->string('locale')->index();
         
@@ -29,7 +51,7 @@ class TableController {
             $table->text('text');
         
             $table->unique(['article_id','locale']);
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');        
         });        
     }
 

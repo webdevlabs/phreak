@@ -16,7 +16,7 @@ class Session extends SessionHandler
 
     public function start()
     {
-        if (session_id() === '') {
+        if (session_id() == '') {
             if (session_start()) {
                 return true;
             }

@@ -17,23 +17,21 @@ class ArticleController {
             $article->translation($locale)->name = "Title {$locale}";
             $article->translation($locale)->text = "Text {$locale}";
         }
-        $article->translation('bg')->name = "Title bg";
-        $article->translation('bg')->text = "Text bg";
         $article->save();
     
         echo 'Created an article with some translations!';
     }
 
-    public function getShow($email)
+    public function getShow($id)
     {
         try {
-            $user = Article::where('email',$email)->firstOrFail();
+            $article = Article::find($id)->translation()->firstOrFail();
         }
         catch (NotFoundException $err) {
-            echo 'Email not found';
+            echo 'not found';
             return;
         }
-        print_r($user->toArray());
+        print_r($article->toArray());
     }
 
 }

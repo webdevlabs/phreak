@@ -14,6 +14,7 @@ class Article extends Eloquent
       if ($language == null) {
         $language = 'bg';
       }
+//      echo $language.'<br/>';
       return $this->hasMany('Modules\Eloq\Models\ArticleTranslation')->where('locale', '=', $language);
    }
 
