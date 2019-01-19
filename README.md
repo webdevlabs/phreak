@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.org/webdevlabs/phreak.svg?branch=master)](https://travis-ci.org/webdevlabs/phreak)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45799a2694d74bc784c62a89d24c9b5a)](https://www.codacy.com/app/webdevlabs/phreak?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=webdevlabs/phreak&amp;utm_campaign=Badge_Grade)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3/mini.png)](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3)
-[![Dependency Status](https://www.versioneye.com/user/projects/58f730d9710da2004fad45d7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58f730d9710da2004fad45d7)
 [![StyleCI](https://styleci.io/repos/86944823/shield?branch=master)](https://styleci.io/repos/86944823)
 
 ### ultra-light fast php framework powered by:
@@ -126,3 +125,54 @@ class ... {
     }
 }
 ```
+
+### Database
+You now have different options for managing your database. There are 2 existing database drivers.
+Sample database wrapper class DB:: and the well known database mapper Eloquent.
+
+**You control what database driver to load directly from config/database.php**
+
+Example PDO driver fetch queries:
+```
+ * Result: single column
+ * $count = DB::column('SELECT COUNT(*) FROM `user`);
+
+ * Result: an array(key => value) results (i.e. for making a selectbox)
+ * $pairs = DB::pairs('SELECT `id`, `username` FROM `user`);
+
+ * Result: a single row result
+ * $user = DB::row('SELECT * FROM `user` WHERE `id` = ?', array($user_id));
+
+ * Result: a single row result
+ * $user = DB::row('SELECT * FROM `user` WHERE `id` = :varname', array(":varname"=>"some variable"));
+
+ * Result: an array of results
+ * $banned_users = DB::fetch('SELECT * FROM `user` WHERE `banned` = ?', array(TRUE));
+ 
+ * Result: any query
+ * $dosql = DB::query('UPDATE `settigs` WHERE `setid`=?', ['somesetid']);
+ 
+ * Result: insert user
+ * DB::insert('users', ['username'=>'test','password'=>'testpass']);
+
+ * Result: update user password where user_id = 1
+ * DB::update('users', ['password'=>'testpass'], '1', 'user_id');
+ ```
+ 
+ The new available method for managing your database is Eloquent (from the Laravel framework).
+ 
+ The *Eloquent ORM* provides a beautiful, simple ActiveRecord implementation for working with your database. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
+ 
+*Examples of phreak eloquent usage can be found at the '**modules/elog**' made for demonstration.*
+
+Full documentation can be found at [Eloquent's](https://laravel.com/docs/5.7/eloquent) page.
+
+
+### Console Commands
+You can also execute phreak controllers from your console/crontab by calling the console.php file where the parameters are the filename of the controller.
+
+**Calls the App\Commands\SomeController.php with the proper request method.**
+```
+php console.php SomeController
+```
+All console controllers are located in the "app/commands" folder. The folder location is defined in the 'app/ConsoleController.php' and can be changed. 
