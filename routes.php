@@ -3,6 +3,9 @@
  * DEFAULT ROUTES.
  */
 
+// Default console commands controller
+ $router->controller('/console', 'App\ConsoleController');
+
 // Add default homepage route
 $router->get('/', ['App\HomeController', 'showIndex']);
 
