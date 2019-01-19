@@ -163,7 +163,7 @@ Example PDO driver fetch queries:
  
  The *Eloquent ORM* provides a beautiful, simple ActiveRecord implementation for working with your database. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
  
-*Examples of phreak eloquent usage can be found at the '**modules/elog**' made for demonstration.*
+*Examples of phreak eloquent usage can be found at the '**modules/eloq**' made for demonstration.*
 
 Full documentation can be found at [Eloquent's](https://laravel.com/docs/5.7/eloquent) page.
 
