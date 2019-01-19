@@ -16,9 +16,9 @@ class ArticleController {
         foreach (['en', 'bg', 'fr', 'de'] as $locale) {
             $article->translation($locale)->name = "Title {$locale}";
             $article->translation($locale)->text = "Text {$locale}";
-        }
+//            $article->translation($locale)->save();
+        }        
         $article->save();
-    
         echo 'Created an article with some translations!';
     }
 

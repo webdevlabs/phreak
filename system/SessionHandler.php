@@ -49,7 +49,8 @@ class SessionHandler extends \SessionHandler
      */
     public function open($save_path, $session_name)
     {
-        $this->key = $this->getKey('KEY_'.$session_name);
+        //$this->key = $this->getKey('KEY_'.$session_name);
+        $this->key = $this->getKey($session_name);
 
         return parent::open($save_path, $session_name);
     }
