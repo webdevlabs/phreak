@@ -170,6 +170,7 @@ Full documentation can be found at [Eloquent's](https://laravel.com/docs/5.7/elo
 
 ### Console Commands
 You can also execute phreak controllers from your console/crontab by calling the console.php file where the parameters are the filename of the controller.
+
 **Calls the App\Commands\SomeController.php with the proper request method.**
 ```
 php console.php SomeController
