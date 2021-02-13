@@ -3,6 +3,7 @@
 namespace Modules\Eloq\Controllers;
 
 use Modules\Eloq\Models\Article as Article;
+use Modules\Eloq\Models\ArticleTranslation as ArticleTranslation;
 use Illuminate\Database\Eloquent\ModelNotFoundException as NotFoundException;
 
 class ArticleController {
@@ -13,12 +14,16 @@ class ArticleController {
         $article->online = true;
         $article->save();
 
-        foreach (['en', 'bg', 'fr', 'de'] as $locale) {
-            $article->translation($locale)->name = "Title {$locale}";
-            $article->translation($locale)->text = "Text {$locale}";
-//            $article->translation($locale)->save();
+        foreach (['en', 'bg', 'fr', 'de'] as $locale) {            
+            $translations[] = new ArticleTranslation([
+                'name'=>"Title {$locale}",
+                'text'=>"Text {$locale}",
+                'locale'=>$locale
+            ]);
         }        
-        $article->save();
+        $article->translation()->saveMany($translations);
+//        $article->translation()->saveMany([new ArticleTranslation(['name'=>'asd','text'=>'asdfx'])]);
+
         echo 'Created an article with some translations!';
     }
 
