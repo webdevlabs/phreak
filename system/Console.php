@@ -21,7 +21,7 @@ class Console
 
             return new $clsname();
         } else {
-            die('Command not found.');
+            exit('Command not found.');
         }
     }
 }

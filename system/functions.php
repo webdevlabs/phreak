@@ -383,11 +383,11 @@ function ratelimiter($rate = 5, $per = 8)
     $allowance = $rate;
 
     return function ($consumed = 1) use (
-    &$last_check,
-    &$allowance,
-    $rate,
-    $per
-  ) {
+        &$last_check,
+        &$allowance,
+        $rate,
+        $per
+    ) {
         $current = microtime(true);
         $time_passed = $current - $last_check;
         $last_check = $current;

@@ -50,7 +50,7 @@ class Validation
             'name'         => $field,
             'errorMessage' => $errorMessage,
             'rules'        => $rules,
-            ];
+        ];
     }
 
     /**
