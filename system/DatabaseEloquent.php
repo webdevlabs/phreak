@@ -16,11 +16,11 @@ class DatabaseEloquent
     {
         $capsule = new Capsule();
         $capsule->addConnection([
-           'driver'   => 'mysql',
-           'host'     => $this->conf->database['mysql']['host'],
-           'database' => $this->conf->database['mysql']['dbname'],
-           'username' => $this->conf->database['mysql']['username'],
-           'password' => $this->conf->database['mysql']['password'],
+            'driver'   => 'mysql',
+            'host'     => $this->conf->database['mysql']['host'],
+            'database' => $this->conf->database['mysql']['dbname'],
+            'username' => $this->conf->database['mysql']['username'],
+            'password' => $this->conf->database['mysql']['password'],
         ]);
 
         //Make this Capsule instance available globally.

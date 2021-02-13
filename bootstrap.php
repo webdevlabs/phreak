@@ -10,7 +10,7 @@
  * @link https://www.webdevlabs.com
  */
 if (version_compare(phpversion(), '5.6.0', '<')) {
-    die('PHP5.6+ Required! PHP7 Recommended.');
+    exit('PHP5.6+ Required! PHP7 Recommended.');
 }
 
 /*
