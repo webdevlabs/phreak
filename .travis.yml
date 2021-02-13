@@ -7,13 +7,13 @@ notifications:
     on_success: change
     on_failure: always
 php:
-  - '7.1'
   - '7.2'
   - '7.3'
+  - '7.4'
 env:
   - COMPOSER_OPTS=""
   - COMPOSER_OPTS="--prefer-lowest"
-before_script: 
+before_script:
   - composer self-update
   - composer update
 script: phpunit Test.php
