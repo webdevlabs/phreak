@@ -4,6 +4,10 @@ global_exclude_dirs:
     - vendor
 
 rules:
+    php.method_or_property_missing_visibility:
+        enabled: false
+    php.psr1:
+        enabled: false
     php.duplicated_code:
         enabled: false
     php.dynamically_change_configuration:
