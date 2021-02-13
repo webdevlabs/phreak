@@ -1,7 +1,7 @@
 # Phreak!
 [![Build Status](https://travis-ci.org/webdevlabs/phreak.svg?branch=master)](https://travis-ci.org/webdevlabs/phreak)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/760b0d1208b1474fa2b6b796a0cf2b7c)](https://www.codacy.com/gh/webdevlabs/phreak/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=webdevlabs/phreak&amp;utm_campaign=Badge_Grade)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3/mini.png)](https://insight.sensiolabs.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3)
+[![SymfonyInsight](https://insight.symfony.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3/mini.svg)](https://insight.symfony.com/projects/bd0c18b6-3e25-4c13-8969-7d28bc41eaf3)
 [![StyleCI](https://styleci.io/repos/86944823/shield?branch=master)](https://styleci.io/repos/86944823)
 
 ### ultra-light fast php framework powered by:
